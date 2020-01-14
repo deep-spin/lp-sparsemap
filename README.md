@@ -50,4 +50,20 @@ pip install -e .            # builds lpsmap and creates a link
 
 ## dysparsemap
 
-Installation uses cmake.  Examples to come soon.
+Requires [this patch to
+dynet](https://github.com/vene/dynet/commit/3c5e0c0e2a6a398312edaf7297473677b052280e)
+in order to make dynet export cmake targets to link against.
+(sorry, I'm new to cmake and haven't managed to test it and make a PR yet.)
+
+Once the patched dynet is installed, do
+
+```mkdir cbuild
+cd cbuild
+cmake ..
+make
+```
+
+Then you can try the dynet gradient check tests that get compiled.
+
+
+
