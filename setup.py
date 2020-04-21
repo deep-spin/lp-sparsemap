@@ -12,6 +12,7 @@ from Cython.Build import cythonize
 
 
 AD3_FLAGS_UNIX = [
+    '-std=c++11',
     '-O3',
     '-Wall',
     '-Wno-sign-compare',
