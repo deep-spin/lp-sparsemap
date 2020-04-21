@@ -218,6 +218,10 @@ class GenericFactor : public Factor
         for (auto && ui : mu_u)
             out << ui << " ";
     }
+    virtual void InitActiveSet(Configuration configuration);
+    virtual void InitActiveSetFromScores(
+        const vector<double>& variable_log_potentials,
+        const vector<double>& additional_log_potentials);
 
   protected:
     vector<Configuration> active_set_;
@@ -225,8 +229,8 @@ class GenericFactor : public Factor
     vector<double> inverse_A_;
     int num_max_iterations_QP_; // Initialize to 10.
     int verbosity_;             // Verbosity level.
-
     bool clear_cache_;
+    Configuration init_configuration_ = nullptr;
 };
 
 } // namespace AD3

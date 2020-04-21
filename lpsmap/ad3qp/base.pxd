@@ -61,6 +61,9 @@ cdef extern from "ad3/GenericFactor.h" namespace "AD3":
         void SetClearCache(bool)
         void QVec(const double* v, double* out)
         void DistJacobianVec(const vector[double] v, vector[double] out, vector[double] out_v);
+        void InitActiveSet(Configuration)
+        void InitActiveSetFromScores(vector[double] variable_scores,
+                                     vector[double] additional_scores)
 
 
 cdef extern from "ad3/MultiVariable.h" namespace "AD3":

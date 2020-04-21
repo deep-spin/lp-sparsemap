@@ -16,6 +16,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with AD3 2.1.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cmath>
 #include "GenericFactor.h"
 #include "Utils.h"
 #define EIGEN
@@ -25,7 +26,6 @@
 #include "lapacke/lapacke.h"
 #endif
 #include <limits>
-#include <math.h>
 
 namespace AD3 {
 
@@ -42,6 +42,27 @@ GenericFactor::ClearActiveSet()
         DeleteConfiguration(active_set_[j]);
     }
     active_set_.clear();
+}
+
+void
+GenericFactor::InitActiveSet(Configuration configuration)
+{
+    init_configuration_ = configuration;
+}
+
+void
+GenericFactor::InitActiveSetFromScores(
+    const vector<double>& variable_log_potentials,
+    const vector<double>& additional_log_potentials)
+{
+    Configuration configuration = CreateConfiguration();
+
+    double value;
+    Maximize(variable_log_potentials,
+             additional_log_potentials,
+             configuration,
+             &value);
+    InitActiveSet(configuration);
 }
 
 bool
@@ -357,14 +378,24 @@ GenericFactor::SolveQP(const vector<double>& variable_log_potentials,
         variable_posteriors->resize(variable_log_potentials.size());
         additional_posteriors->resize(additional_log_potentials.size());
         distribution_.clear();
-        // Initialize by solving the LP, discarding the quadratic term.
-        Configuration configuration = CreateConfiguration();
 
-        double value;
-        Maximize(variable_log_potentials_adj,
-                 additional_log_potentials,
-                 configuration,
-                 &value);
+        // Initialize the active set with one vertex.
+        // For best convergence, it's good to use the MAP.
+        // However you may specify a custom initializer.
+       Configuration configuration = init_configuration_;
+
+        if (configuration == nullptr)
+        {
+            // Initialize by solving the LP, discarding the quadratic term.
+            configuration = CreateConfiguration();
+
+            double value;
+            Maximize(variable_log_potentials_adj,
+                     additional_log_potentials,
+                     configuration,
+                     &value);
+        }
+
         active_set_.push_back(configuration);
         distribution_.push_back(1.0);
 

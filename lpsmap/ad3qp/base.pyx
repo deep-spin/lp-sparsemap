@@ -369,3 +369,9 @@ cdef class PGenericFactor(PFactor):
         active_set_py = [self._cast_configuration(x) for x in active_set_c]
 
         return active_set_py, distribution
+
+    def init_active_set_from_scores(self, vector[double] eta_u,
+                                    vector[double] eta_v):
+        cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
+        gf.InitActiveSetFromScores(eta_u, eta_v)
+
