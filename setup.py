@@ -132,13 +132,29 @@ class build_clib(orig_build_clib):
         for (lib_name, build_info) in libraries:
             build_info['cflags'] = compile_args
 
-        print("LIB OUTPUT DIR", self.build_clib)
-
         super().build_libraries(libraries)
 
 
 class install_lib(orig_install_lib):
-    pass
+    def install(self):
+        # need to make sure that libad3 is in the build dir before installing
+        # file is expected in
+
+        build_clib = self.get_finalized_command('build_clib')
+
+        # not trying to be generic, seek specifically "libad3*".
+        libname = "libad3"
+        # Code can be made generic using build_clib.libraries.
+
+        lib_path = build_clib.build_clib
+        tgt = os.path.join(self.build_dir, lib_path)
+        self.mkpath(tgt)
+        with os.scandir(lib_path) as it:
+            for entry in it:
+                if entry.is_file() and entry.name.startswith(libname):
+                    self.copy_file(entry.path, os.path.join(tgt, entry.name))
+
+        super().install()
 
 
 # this is a backport of a workaround for a problem in distutils.
@@ -161,6 +177,7 @@ cmdclass = {
     'build_clib': build_clib,
     'bdist_egg': bdist_egg,
     'develop': develop,
+    'install_lib': install_lib,
 }
 
 
