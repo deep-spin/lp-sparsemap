@@ -4,9 +4,11 @@ import re
 import warnings
 from setuptools import setup
 from setuptools.extension import Extension
-from setuptools.command.build_ext import build_ext
-from setuptools.command.build_clib import build_clib
-from setuptools.command.bdist_egg import bdist_egg
+from setuptools.command.build_ext import build_ext as orig_build_ext
+from setuptools.command.build_clib import build_clib as orig_build_clib
+from setuptools.command.install_lib import install_lib as orig_install_lib
+from setuptools.command.develop import develop as orig_develop
+from setuptools.command.bdist_egg import bdist_egg as orig_bdist_egg
 
 from Cython.Build import cythonize
 
@@ -85,7 +87,7 @@ def find_eigen():
 
 
 # support compiler-specific cflags in extensions and libs
-class our_build_ext(build_ext):
+class build_ext(orig_build_ext):
     def build_extensions(self):
 
         # bug in distutils: flag not valid for c++
@@ -100,10 +102,23 @@ class our_build_ext(build_ext):
         for e in self.extensions:
             e.extra_compile_args.extend(compile_args)
 
-        build_ext.build_extensions(self)
+        # build_clib = self.get_finalized_command("build_clib")
+        # print(build_clib.build_clib)
+
+        super().build_extensions()
 
 
-class our_build_clib(build_clib):
+class build_clib(orig_build_clib):
+
+    # output ad3 library to lpsmap/lib/libad3
+    def initialize_options(self):
+        super().initialize_options()
+        build_py = self.get_finalized_command('build_py')
+        output_dir = os.path.join(build_py.get_package_dir("lpsmap"),
+                                  "core", "lib")
+
+        self.build_clib = output_dir
+
     def build_libraries(self, libraries):
         # bug in distutils: flag not valid for c++
         flag = '-Wstrict-prototypes'
@@ -117,21 +132,36 @@ class our_build_clib(build_clib):
         for (lib_name, build_info) in libraries:
             build_info['cflags'] = compile_args
 
-        build_clib.build_libraries(self, libraries)
+        print("LIB OUTPUT DIR", self.build_clib)
+
+        super().build_libraries(libraries)
+
+
+class install_lib(orig_install_lib):
+    pass
 
 
 # this is a backport of a workaround for a problem in distutils.
 # install_lib doesn't call build_clib
-class our_bdist_egg(bdist_egg):
+class bdist_egg(orig_bdist_egg):
     def run(self):
-        self.call_command('build_clib')
+        # self.call_command('build_clib')
         bdist_egg.run(self)
 
 
+class develop(orig_develop):
+    def install_for_development(self):
+        print("triggering clib")
+        self.run_command('build_clib')
+        super().install_for_development()
+
+
 cmdclass = {
-    'build_ext': our_build_ext,
-    'build_clib': our_build_clib,
-    'bdist_egg': our_bdist_egg}
+    'build_ext': build_ext,
+    'build_clib': build_clib,
+    'bdist_egg': bdist_egg,
+    'develop': develop,
+}
 
 
 libad3 = ('ad3', {
@@ -160,6 +190,7 @@ setup(name='lp-sparsemap',
       libraries=[libad3],
       author="Vlad Niculae",
       packages=['lpsmap'],
+      package_data={'lpsmap': ['core/lib/*', 'core/include/ad3/*']},
       cmdclass=cmdclass,
       include_package_data=True,
       ext_modules=cythonize(extensions)
