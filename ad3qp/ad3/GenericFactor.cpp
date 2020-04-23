@@ -365,6 +365,8 @@ GenericFactor::SolveQP(const vector<double>& variable_log_potentials,
                        vector<double>* variable_posteriors,
                        vector<double>* additional_posteriors)
 {
+    if (verbosity_ > 1)
+        cout << "Solving QP..." << endl;
     size_t dim = variable_log_potentials.size();
 
     vector<double> variable_log_potentials_adj = variable_log_potentials;
@@ -403,12 +405,23 @@ GenericFactor::SolveQP(const vector<double>& variable_log_potentials,
         double nrm = CountCommonValuesAdapt(configuration, configuration);
         inverse_A_ = { -nrm, 1, 1, 0 };
     }
+    if (verbosity_ > 2)
+    {
+        cout << "Distribution at beginning of active set: ";
+        for (auto val : distribution_)
+            cout << val << " ";
+        cout << endl;
+    }
 
     bool changed_active_set = true;
     vector<double> z;
     int num_max_iterations = num_max_iterations_QP_;
     double tau = 0;
     for (int iter = 0; iter < num_max_iterations; ++iter) {
+
+        if (verbosity_ > 2)
+            cout << "active set iter " << iter << endl;
+
         bool same_as_before = true;
         bool unbounded = false;
         if (changed_active_set) {

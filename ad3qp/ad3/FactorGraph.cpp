@@ -1167,11 +1167,19 @@ FactorGraph::RunAD3(double lower_bound,
         if (primal_residual < residual_threshold) {
             compute_dual = true;
             compute_primal_rel = true;
-        } else if (
-                (t > 0 && 0 == (t % num_iterations_compute_dual)) ||
-                (t == ad3_max_iterations_ - 1)) {
+        } else if (t > 0 && 0 == (t % num_iterations_compute_dual))
+        {
             compute_dual = true;
         }
+
+        // if using sparsemap, at the very end, do not compute the dual.
+        // This breaks the cached active sets.
+        // TODO: check that this is fine for inactive factors too.
+        // (This is not the most elegant solution, but it's
+        //  a bit of a pain to manage multiple active sets otherwise,
+        //  because of the use of raw pointers.)
+        if (t == ad3_max_iterations_ - 1)
+            compute_dual = false; // regardless of other criteria.
 
         // Compute dual value.
         // TODO: make this a function of its own?
@@ -1205,9 +1213,10 @@ FactorGraph::RunAD3(double lower_bound,
 
                 // QP VN what is this delta? with dense factors, always zero.
                 // cout << "delta " << delta << endl;
-                //
                 double val = 0;
 
+                // Warning: when this is called, the cached p of the factor
+                // is rewritten and may not match the marginals.
                 if (solve_qp) {
                     auto add_logp = factor->GetAdditionalLogPotentials();
                     factor->SolveQP(log_potentials,
@@ -1265,7 +1274,8 @@ FactorGraph::RunAD3(double lower_bound,
             }
         }
 
-        if (dual_obj_best > dual_obj) {
+        if ((t == ad3_max_iterations_ - 1) ||
+                (dual_obj_best > dual_obj)) {
             dual_obj_best = dual_obj;
             for (size_t i = 0; i < variables_.size(); ++i) {
                 (*posteriors)[i] = maps_av_[i];
