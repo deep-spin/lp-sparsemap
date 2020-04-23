@@ -2412,12 +2412,13 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_solve_qp(struct 
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_2solve_qp_adjusted(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, std::vector<double>  __pyx_v_variable_scores, std::vector<double>  __pyx_v_additional_scores, std::vector<double>  __pyx_v_degrees, int __pyx_v_max_iter); /* proto */
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_4q_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_v, __Pyx_memviewslice __pyx_v_out); /* proto */
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_signatures, PyObject *__pyx_v_args, PyObject *__pyx_v_kwargs, CYTHON_UNUSED PyObject *__pyx_v_defaults); /* proto */
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional); /* proto */
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_14dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional); /* proto */
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_16dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional); /* proto */
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_8get_sparse_solution(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_10init_active_set_from_scores(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, std::vector<double>  __pyx_v_eta_u, std::vector<double>  __pyx_v_eta_v); /* proto */
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_18__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12set_qp_iter(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, int __pyx_v_max_iter); /* proto */
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_22__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -6679,9 +6680,9 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_v
 }
 
 /* Python wrapper */
-static PyObject *__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_fuse_0__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec = {"__pyx_fuse_0dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec};
-static PyObject *__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_fuse_0__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec = {"__pyx_fuse_0dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec};
+static PyObject *__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_dp = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out_additional = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -6744,14 +6745,14 @@ static PyObject *__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13di
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12dist_jacobian_vec(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), __pyx_v_dp, __pyx_v_out, __pyx_v_out_additional);
+  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_14dist_jacobian_vec(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), __pyx_v_dp, __pyx_v_out, __pyx_v_out_additional);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional) {
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_14dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional) {
   AD3::Factor *__pyx_v_f;
   AD3::GenericFactor *__pyx_v_gf;
   size_t __pyx_v_n_active;
@@ -6995,9 +6996,9 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12dist_jacobian_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_fuse_1__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec = {"__pyx_fuse_1dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec};
-static PyObject *__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_fuse_1__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec = {"__pyx_fuse_1dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec};
+static PyObject *__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   __Pyx_memviewslice __pyx_v_dp = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_out_additional = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -7060,14 +7061,14 @@ static PyObject *__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15di
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_14dist_jacobian_vec(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), __pyx_v_dp, __pyx_v_out, __pyx_v_out_additional);
+  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_16dist_jacobian_vec(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), __pyx_v_dp, __pyx_v_out, __pyx_v_out_additional);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_14dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional) {
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_16dist_jacobian_vec(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, __Pyx_memviewslice __pyx_v_dp, __Pyx_memviewslice __pyx_v_out, __Pyx_memviewslice __pyx_v_out_additional) {
   AD3::Factor *__pyx_v_f;
   AD3::GenericFactor *__pyx_v_gf;
   size_t __pyx_v_n_active;
@@ -7530,6 +7531,7 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_10init_active_se
  *         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
  *         gf.InitActiveSetFromScores(eta_u, eta_v)             # <<<<<<<<<<<<<<
  * 
+ *     def set_qp_iter(self, int max_iter):
  */
   __pyx_v_gf->InitActiveSetFromScores(__pyx_v_eta_u, __pyx_v_eta_v);
 
@@ -7548,6 +7550,75 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_10init_active_se
   return __pyx_r;
 }
 
+/* "lpsmap/ad3qp/base.pyx":378
+ *         gf.InitActiveSetFromScores(eta_u, eta_v)
+ * 
+ *     def set_qp_iter(self, int max_iter):             # <<<<<<<<<<<<<<
+ *         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
+ *         gf.SetQPMaxIter(max_iter)
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13set_qp_iter(PyObject *__pyx_v_self, PyObject *__pyx_arg_max_iter); /*proto*/
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13set_qp_iter(PyObject *__pyx_v_self, PyObject *__pyx_arg_max_iter) {
+  int __pyx_v_max_iter;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_qp_iter (wrapper)", 0);
+  assert(__pyx_arg_max_iter); {
+    __pyx_v_max_iter = __Pyx_PyInt_As_int(__pyx_arg_max_iter); if (unlikely((__pyx_v_max_iter == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 378, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("lpsmap.ad3qp.base.PGenericFactor.set_qp_iter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12set_qp_iter(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), ((int)__pyx_v_max_iter));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_12set_qp_iter(struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, int __pyx_v_max_iter) {
+  AD3::GenericFactor *__pyx_v_gf;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("set_qp_iter", 0);
+
+  /* "lpsmap/ad3qp/base.pyx":379
+ * 
+ *     def set_qp_iter(self, int max_iter):
+ *         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr             # <<<<<<<<<<<<<<
+ *         gf.SetQPMaxIter(max_iter)
+ * 
+ */
+  __pyx_v_gf = ((AD3::GenericFactor *)__pyx_v_self->__pyx_base.thisptr);
+
+  /* "lpsmap/ad3qp/base.pyx":380
+ *     def set_qp_iter(self, int max_iter):
+ *         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
+ *         gf.SetQPMaxIter(max_iter)             # <<<<<<<<<<<<<<
+ * 
+ */
+  __pyx_v_gf->SetQPMaxIter(__pyx_v_max_iter);
+
+  /* "lpsmap/ad3qp/base.pyx":378
+ *         gf.InitActiveSetFromScores(eta_u, eta_v)
+ * 
+ *     def set_qp_iter(self, int max_iter):             # <<<<<<<<<<<<<<
+ *         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
+ *         gf.SetQPMaxIter(max_iter)
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError("no default __reduce__ due to non-trivial __cinit__")
@@ -7555,19 +7626,19 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_10init_active_se
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_19__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_19__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_18__reduce_cython__(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self));
+  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__reduce_cython__(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_18__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self) {
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -7609,19 +7680,19 @@ static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_18__reduce_cytho
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_23__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_23__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__setstate_cython__(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_22__setstate_cython__(((struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_20__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_6lpsmap_5ad3qp_4base_14PGenericFactor_22__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -21109,10 +21180,11 @@ static PyMethodDef __pyx_methods_6lpsmap_5ad3qp_4base_PGenericFactor[] = {
   {"q_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_5q_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_4q_vec},
   {"get_sparse_solution", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_9get_sparse_solution, METH_NOARGS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_8get_sparse_solution},
   {"init_active_set_from_scores", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_11init_active_set_from_scores, METH_VARARGS|METH_KEYWORDS, 0},
-  {"__pyx_fuse_0dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec},
-  {"__pyx_fuse_1dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_19__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__setstate_cython__, METH_O, 0},
+  {"set_qp_iter", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_13set_qp_iter, METH_O, 0},
+  {"__pyx_fuse_0dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_0__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec},
+  {"__pyx_fuse_1dist_jacobian_vec", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_fuse_1__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6lpsmap_5ad3qp_4base_14PGenericFactor_6dist_jacobian_vec},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_21__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_6lpsmap_5ad3qp_4base_14PGenericFactor_23__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -22865,12 +22937,12 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __pyx_FusedFunction_NewEx(&__pyx_fuse_0__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_13dist_jacobian_vec, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PGenericFactor_dist_jacobian_vec, NULL, __pyx_n_s_lpsmap_ad3qp_base, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __pyx_t_2 = __pyx_FusedFunction_NewEx(&__pyx_fuse_0__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PGenericFactor_dist_jacobian_vec, NULL, __pyx_n_s_lpsmap_ad3qp_base, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_empty_tuple);
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_float, __pyx_t_2) < 0) __PYX_ERR(1, 292, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __pyx_FusedFunction_NewEx(&__pyx_fuse_1__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_15dist_jacobian_vec, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PGenericFactor_dist_jacobian_vec, NULL, __pyx_n_s_lpsmap_ad3qp_base, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 292, __pyx_L1_error)
+  __pyx_t_2 = __pyx_FusedFunction_NewEx(&__pyx_fuse_1__pyx_mdef_6lpsmap_5ad3qp_4base_14PGenericFactor_17dist_jacobian_vec, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PGenericFactor_dist_jacobian_vec, NULL, __pyx_n_s_lpsmap_ad3qp_base, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_empty_tuple);
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_double, __pyx_t_2) < 0) __PYX_ERR(1, 292, __pyx_L1_error)

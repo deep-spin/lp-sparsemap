@@ -375,3 +375,7 @@ cdef class PGenericFactor(PFactor):
         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
         gf.InitActiveSetFromScores(eta_u, eta_v)
 
+    def set_qp_iter(self, int max_iter):
+        cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
+        gf.SetQPMaxIter(max_iter)
+
