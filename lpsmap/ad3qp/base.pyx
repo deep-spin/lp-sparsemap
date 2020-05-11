@@ -243,7 +243,8 @@ cdef class PGenericFactor(PFactor):
             self,
             vector[double] variable_scores,
             vector[double] additional_scores,
-            int max_iter=10):
+            int max_iter=10,
+            bool keep_state=True):
         """Solve SparseMAP for a single factor.
 
         Parameters
@@ -258,6 +259,10 @@ cdef class PGenericFactor(PFactor):
         max_iter, int
             Number of active set iterations.
 
+        keep_state, bool
+            Whether to keep the active set state.
+            Required if backward pass is used.
+
         Returns
         -------
 
@@ -270,6 +275,7 @@ cdef class PGenericFactor(PFactor):
 
         cdef GenericFactor* gf = <GenericFactor*?> self.thisptr
         gf.SetQPMaxIter(max_iter)
+        gf.SetClearCache(not keep_state)
         return super().solve_qp(variable_scores, additional_scores)
 
     def solve_qp_adjusted(
