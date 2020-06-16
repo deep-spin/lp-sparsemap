@@ -8,7 +8,6 @@ class Variable(object):
     def __init__(self, scores):
         self.shape = scores.shape
 
-        # self._fg = fg
         self._offset = None
         self._ix = np.arange(np.prod(self.shape)).reshape(self.shape)
         self._scores = scores
@@ -27,7 +26,6 @@ class Variable(object):
 class Slice(object):
     def __init__(self, var, slice_arg):
         self._base_var = var
-        # self._fg = self._base_var._fg
         self._ix = self._base_var._ix[slice_arg]
 
     def __getitem__(self, slice_arg):
@@ -75,7 +73,7 @@ class FactorGraph(object):
 
             for i in range(var._ix.size):
                 v = pfg.create_binary_variable()
-                v.set_log_potential(var._scores[i])
+                v.set_log_potential(var._scores.flat[i])
                 pvars.append(v)
 
         n_vars = offset_
@@ -93,11 +91,11 @@ class FactorGraph(object):
             var = factor._variables
             if isinstance(var, Variable):
                 ix = var._ix + offset[var]
-                my_pvars = pvars[ix].tolist()
+                my_pvars = pvars[ix.ravel()].tolist()
 
             elif isinstance(var, Slice):
                 ix = var._ix + offset[var._base_var]
-                my_pvars = pvars[ix].tolist()
+                my_pvars = pvars[ix.ravel()].tolist()
 
             else:
                 raise NotImplementedError()
@@ -144,6 +142,18 @@ def main():
     print(u.value)
     print(u_left.value)
     print(u_right.value)
+
+    print()
+    print()
+
+    # now with arrays
+    fg = FactorGraph()
+    x = np.random.randn(3, 3)
+    u = fg.variable_from(x)
+    fg.add(XOR(u[:2, :]))
+    fg.add(XOR(u[1:, :]))
+    fg.solve()
+    print(u.value)
 
 
 if __name__ == '__main__':
