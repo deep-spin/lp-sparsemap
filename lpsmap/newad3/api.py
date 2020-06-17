@@ -1,6 +1,8 @@
 import numpy as np
 from lpsmap.ad3qp.factor_graph import PFactorGraph
 
+from .factors import Xor, Budget
+
 
 class Variable(object):
     """AD3 binary variables packed as a tensor."""
@@ -16,10 +18,10 @@ class Variable(object):
         return Slice(self, slice_arg)
 
     def __repr__(self):
-        return f"Variable(shape={self.shape}, ix={self._ix})"
-
+        return f"Variable(shape={self.shape})"
 
     # todo: operator~,  same gist as above
+    # todo: how to
     # todo: smarter attr.value for redirection
 
 
@@ -40,7 +42,7 @@ class Slice(object):
         return self._base_var.value[self._ix]
 
     def __repr__(self):
-        return f"Slice(shape={self.shape}, ix={self._ix})"
+        return f"Slice(shape={self.shape})"
 
 
 class FactorGraph(object):
@@ -67,27 +69,32 @@ class FactorGraph(object):
         offset_ = 0
 
         pvars = []
+        scores = []
+
         for var in self.variables:
             offset[var] = offset_
             offset_ += var._ix.size
 
+            scores.append(var._scores.ravel())
             for i in range(var._ix.size):
                 v = pfg.create_binary_variable()
-                v.set_log_potential(var._scores.flat[i])
+                # v.set_log_potential(var._scores.flat[i])
                 pvars.append(v)
 
         n_vars = offset_
-        return offset, pvars
-
+        return offset, pvars, np.concatenate(scores)
 
     def solve(self):
         pfg = PFactorGraph()
-        offset, pvars = self._make_variables(pfg)
+
+        offset, pvars, scores = self._make_variables(pfg)
+
+        for v, s in zip(pvars, scores):
+            v.set_log_potential(s)
 
         pvars = np.array(pvars)  # so we may index by list
 
         for factor in self.factors:
-
             var = factor._variables
             if isinstance(var, Variable):
                 ix = var._ix + offset[var]
@@ -99,7 +106,6 @@ class FactorGraph(object):
 
             else:
                 raise NotImplementedError()
-
             factor._construct(pfg, my_pvars)
 
         value, u, add, status = pfg.solve_qp_ad3()
@@ -108,18 +114,6 @@ class FactorGraph(object):
         for var in self.variables:
             k = offset[var]
             var.value = u[k:k + var._ix.size].reshape(var._ix.shape)
-        # print(posteriors)
-
-
-# factors
-
-class XOR(object):
-    def __init__(self, variables):
-        self._variables = variables
-
-    # todo: deal with negated
-    def _construct(self, fg, variables):
-        return fg.create_factor_logic('XOR', variables)
 
 
 def main():
@@ -128,30 +122,14 @@ def main():
 
     fg = FactorGraph()
 
-    x = np.random.randn(6)
-    u = fg.variable_from(x)
+    d = 4
+    x = np.random.randn(d, d)
+    u = fg.variable_from(x)  # x are automatically used as scores
 
-    # u_left = u[:4]
-    u_left = u[:][:][:4]
-    u_right = u[-4:]
-    print(u, u_left, u_right)
+    for i in range(d):
+        fg.add(Xor(u[i, :]))
+        fg.add(Budget(u[:, i], budget=2))
 
-    fg.add(XOR(u_left))
-    fg.add(XOR(u_right))
-    fg.solve()
-    print(u.value)
-    print(u_left.value)
-    print(u_right.value)
-
-    print()
-    print()
-
-    # now with arrays
-    fg = FactorGraph()
-    x = np.random.randn(3, 3)
-    u = fg.variable_from(x)
-    fg.add(XOR(u[:2, :]))
-    fg.add(XOR(u[1:, :]))
     fg.solve()
     print(u.value)
 
