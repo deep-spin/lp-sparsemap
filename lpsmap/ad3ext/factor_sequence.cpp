@@ -864,7 +864,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PFactor;
 struct __pyx_obj_6lpsmap_5ad3qp_4base_PGenericFactor;
 struct __pyx_obj_6lpsmap_6ad3ext_15factor_sequence_PFactorSequence;
 
-/* "ad3qp/base.pxd":157
+/* "ad3qp/base.pxd":160
  * # and the fundamental extension types
  * 
  * cdef class PBinaryVariable:             # <<<<<<<<<<<<<<
@@ -878,7 +878,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PBinaryVariable {
 };
 
 
-/* "ad3qp/base.pxd":162
+/* "ad3qp/base.pxd":165
  * 
  * 
  * cdef class PMultiVariable:             # <<<<<<<<<<<<<<
@@ -893,7 +893,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PMultiVariable {
 };
 
 
-/* "ad3qp/base.pxd":169
+/* "ad3qp/base.pxd":172
  * 
  * 
  * cdef class PFactor:             # <<<<<<<<<<<<<<
@@ -907,7 +907,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PFactor {
 };
 
 
-/* "ad3qp/base.pxd":174
+/* "ad3qp/base.pxd":177
  * 
  * 
  * cdef class PGenericFactor(PFactor):             # <<<<<<<<<<<<<<
@@ -932,7 +932,7 @@ struct __pyx_obj_6lpsmap_6ad3ext_15factor_sequence_PFactorSequence {
 
 
 
-/* "ad3qp/base.pxd":162
+/* "ad3qp/base.pxd":165
  * 
  * 
  * cdef class PMultiVariable:             # <<<<<<<<<<<<<<
@@ -946,7 +946,7 @@ struct __pyx_vtabstruct_6lpsmap_5ad3qp_4base_PMultiVariable {
 static struct __pyx_vtabstruct_6lpsmap_5ad3qp_4base_PMultiVariable *__pyx_vtabptr_6lpsmap_5ad3qp_4base_PMultiVariable;
 
 
-/* "ad3qp/base.pxd":174
+/* "ad3qp/base.pxd":177
  * 
  * 
  * cdef class PGenericFactor(PFactor):             # <<<<<<<<<<<<<<
@@ -2047,15 +2047,15 @@ static int __Pyx_modinit_type_import_code(void) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_import_code", 0);
   /*--- Type import code ---*/
-  __pyx_t_1 = PyImport_ImportModule("lpsmap.ad3qp.base"); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 157, __pyx_L1_error)
+  __pyx_t_1 = PyImport_ImportModule("lpsmap.ad3qp.base"); if (unlikely(!__pyx_t_1)) __PYX_ERR(2, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_ptype_6lpsmap_5ad3qp_4base_PBinaryVariable = __Pyx_ImportType(__pyx_t_1, "lpsmap.ad3qp.base", "PBinaryVariable", sizeof(struct __pyx_obj_6lpsmap_5ad3qp_4base_PBinaryVariable), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PBinaryVariable) __PYX_ERR(2, 157, __pyx_L1_error)
+   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PBinaryVariable) __PYX_ERR(2, 160, __pyx_L1_error)
   __pyx_ptype_6lpsmap_5ad3qp_4base_PMultiVariable = __Pyx_ImportType(__pyx_t_1, "lpsmap.ad3qp.base", "PMultiVariable", sizeof(struct __pyx_obj_6lpsmap_5ad3qp_4base_PMultiVariable), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PMultiVariable) __PYX_ERR(2, 162, __pyx_L1_error)
-  __pyx_vtabptr_6lpsmap_5ad3qp_4base_PMultiVariable = (struct __pyx_vtabstruct_6lpsmap_5ad3qp_4base_PMultiVariable*)__Pyx_GetVtable(__pyx_ptype_6lpsmap_5ad3qp_4base_PMultiVariable->tp_dict); if (unlikely(!__pyx_vtabptr_6lpsmap_5ad3qp_4base_PMultiVariable)) __PYX_ERR(2, 162, __pyx_L1_error)
+   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PMultiVariable) __PYX_ERR(2, 165, __pyx_L1_error)
+  __pyx_vtabptr_6lpsmap_5ad3qp_4base_PMultiVariable = (struct __pyx_vtabstruct_6lpsmap_5ad3qp_4base_PMultiVariable*)__Pyx_GetVtable(__pyx_ptype_6lpsmap_5ad3qp_4base_PMultiVariable->tp_dict); if (unlikely(!__pyx_vtabptr_6lpsmap_5ad3qp_4base_PMultiVariable)) __PYX_ERR(2, 165, __pyx_L1_error)
   __pyx_ptype_6lpsmap_5ad3qp_4base_PFactor = __Pyx_ImportType(__pyx_t_1, "lpsmap.ad3qp.base", "PFactor", sizeof(struct __pyx_obj_6lpsmap_5ad3qp_4base_PFactor), __Pyx_ImportType_CheckSize_Warn);
-   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PFactor) __PYX_ERR(2, 169, __pyx_L1_error)
+   if (!__pyx_ptype_6lpsmap_5ad3qp_4base_PFactor) __PYX_ERR(2, 172, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;

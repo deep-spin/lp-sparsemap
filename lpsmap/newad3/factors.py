@@ -1,11 +1,11 @@
-# todo: support axis=k to create multiple factors for each row/col
-# todo: knapsack (how to pass costs? must check broadcast/shape)
+# TODO: support axis=k to create multiple factors for each row/col
+# TODO: knapsack (how to pass costs? must check broadcast/shape)
 
 class Logic(object):
     def __init__(self, variables):
         self._variables = variables
 
-    # todo: deal with negated
+    # TODO: deal with negated
     def _construct(self, fg, variables):
         return fg.create_factor_logic(self.factor_type, variables)
 
@@ -43,6 +43,6 @@ class Budget(object):
         self._variables = variables
         self.budget = budget
 
-    # todo: deal with negated
+    # TODO: deal with negated
     def _construct(self, fg, pvars):
         return fg.create_factor_budget(pvars, self.budget)

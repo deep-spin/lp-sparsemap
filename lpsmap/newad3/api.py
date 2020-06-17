@@ -20,9 +20,9 @@ class Variable(object):
     def __repr__(self):
         return f"Variable(shape={self.shape})"
 
-    # todo: operator~,  same gist as above
-    # todo: how to
-    # todo: smarter attr.value for redirection
+    # TODO: operator~,  same gist as above
+    # TODO: how to
+    # TODO: smarter attr.value for redirection
 
 
 class Slice(object):
@@ -51,7 +51,7 @@ class FactorGraph(object):
         self.variables = []
         self.factors = []
 
-    # todo: gradients here
+    # TODO: gradients here
     def variable_from(self, scores):
         var = Variable(scores=scores)
         self.variables.append(var)
@@ -64,6 +64,12 @@ class FactorGraph(object):
     def add(self, factor):
         self.factors.append(factor)
 
+    def _cat(self, scores):
+        return np.concatenate(scores)
+
+    def _ravel(self, x):
+        return x.ravel()
+
     def _make_variables(self, pfg):
         offset = {}
         offset_ = 0
@@ -75,24 +81,19 @@ class FactorGraph(object):
             offset[var] = offset_
             offset_ += var._ix.size
 
-            scores.append(var._scores.ravel())
+            scores.append(self._ravel(var._scores))
             for i in range(var._ix.size):
                 v = pfg.create_binary_variable()
                 # v.set_log_potential(var._scores.flat[i])
                 pvars.append(v)
 
         n_vars = offset_
-        return offset, pvars, np.concatenate(scores)
+        return offset, pvars, self._cat(scores)
 
-    def solve(self):
-        pfg = PFactorGraph()
-
-        offset, pvars, scores = self._make_variables(pfg)
-
-        for v, s in zip(pvars, scores):
-            v.set_log_potential(s)
-
+    def _make_factors(self, pfg, offset, pvars):
         pvars = np.array(pvars)  # so we may index by list
+
+        scores_add = []
 
         for factor in self.factors:
             var = factor._variables
@@ -108,6 +109,15 @@ class FactorGraph(object):
                 raise NotImplementedError()
             factor._construct(pfg, my_pvars)
 
+        return scores_add
+
+    def solve(self):
+        pfg = PFactorGraph()
+
+        offset, pvars, scores = self._make_variables(pfg)
+        self._make_factors(pfg, offset, pvars)
+
+        pfg.set_log_potentials(scores)
         value, u, add, status = pfg.solve_qp_ad3()
         u = np.array(u)
 

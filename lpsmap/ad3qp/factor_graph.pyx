@@ -8,6 +8,7 @@ from libcpp cimport bool
 cimport cython
 from cython.view cimport array as cvarray
 from cython.view cimport array_cwrapper
+from cython cimport floating
 
 from .base cimport Factor
 from .base cimport BinaryVariable
@@ -606,3 +607,11 @@ cdef class PFactorGraph:
 
         solver_string = ["integral", "fractional", "infeasible", "unsolved"]
         return value, marginals, edge_marginals, solver_string[solver_status]
+
+    def set_log_potentials(self, floating[:] scores):
+        """Expects size(scores) = fg.get_num_variables()"""
+        cdef size_t n_vars = self.thisptr.GetNumVariables()
+        cdef int i
+        for i in range(n_vars):
+            self.thisptr.GetBinaryVariable(i).SetLogPotential(scores[i])
+
