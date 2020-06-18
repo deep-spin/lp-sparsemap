@@ -11,10 +11,9 @@ from .api import FactorGraph, Xor, Budget
 class LPSparseMAP(torch.autograd.Function):
 
     @classmethod
-    def forward(cls, ctx, eta_u, eta_v, fg):
+    def forward(cls, ctx, fg, eta_u, *eta_v):
         fg.set_log_potentials(eta_u.detach().numpy())
         # perhaps to deal with eta_v:
-        # set_additionals(eta_v): assume concatenated in order
         ctx.fg = fg
         ctx.shape = eta_u.shape
         value, u, add, status = fg.solve_qp_ad3()
@@ -28,8 +27,12 @@ class LPSparseMAP(torch.autograd.Function):
 
         du = du.to(dtype=torch.double, device="cpu").detach().numpy()
         out = torch.empty(ctx.shape, dtype=torch.double, device='cpu')
-        ctx.fg.jacobian_vec(du, out.numpy())
-        return out.to(dtype=dtype, device=device), None, None
+        add = ctx.fg.jacobian_vec(du, out.numpy())
+
+        # convert additional gradients into tensors
+        add = (torch.tensor(x, dtype=dtype, device=device) for x in add if x)
+
+        return None, out.to(dtype=dtype, device=device), *add
 
 
 class TorchFactorGraph(FactorGraph):
@@ -48,8 +51,9 @@ class TorchFactorGraph(FactorGraph):
 
         offset, pvars, scores = self._make_variables(pfg)
         scores_add = self._make_factors(pfg, offset, pvars)
+        print(scores_add)
 
-        u = LPSparseMAP.apply(scores, scores_add, pfg)
+        u = LPSparseMAP.apply(pfg, scores, *scores_add)
 
         for var in self.variables:
             k = offset[var]
