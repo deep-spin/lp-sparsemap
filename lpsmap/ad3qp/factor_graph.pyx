@@ -615,3 +615,17 @@ cdef class PFactorGraph:
         for i in range(n_vars):
             self.thisptr.GetBinaryVariable(i).SetLogPotential(scores[i])
 
+    def set_all_additionals(self, list scores):
+        cdef size_t n_factors = self.thisptr.GetNumFactors()
+        cdef Factor* f
+        cdef vector[double] v
+        cdef int i
+        cdef int k = 0
+
+        for i in range(n_factors):
+            f = self.thisptr.GetFactor(i)
+            if f.GetNumAdditionals() > 0:
+                v = scores[k]
+                f.SetAdditionalLogPotentials(v)
+                k += 1
+

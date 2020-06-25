@@ -7,7 +7,7 @@ class Logic(object):
 
     # TODO: deal with negated
     def _construct(self, fg, variables):
-        return fg.create_factor_logic(self.factor_type, variables)
+        return fg.create_factor_logic(self.factor_type, variables), []
 
 
 class Xor(Logic):
@@ -45,4 +45,21 @@ class Budget(object):
 
     # TODO: deal with negated
     def _construct(self, fg, pvars):
-        return fg.create_factor_budget(pvars, self.budget)
+        return fg.create_factor_budget(pvars, self.budget), []
+
+
+class Pair(object):
+    def __init__(self, vars_i, vars_j, additionals):
+        self._variables = vars_i, vars_j
+        self._additionals = additionals
+
+    def _construct(self, fg, pvars):
+        vars_i, vars_j = pvars
+        n = len(vars_i)
+        adds = self._additionals
+        factors = [
+            fg.create_factor_pair([vars_i[k], vars_j[k]], adds[k])
+            for k in range(n)
+        ]
+        add_tensors = [adds[k] for k in range(n)]
+        return factors, adds

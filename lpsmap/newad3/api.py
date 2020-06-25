@@ -1,7 +1,6 @@
 import numpy as np
 from lpsmap.ad3qp.factor_graph import PFactorGraph
 
-from .factors import Xor, Budget
 
 
 class Variable(object):
@@ -90,24 +89,34 @@ class FactorGraph(object):
         n_vars = offset_
         return offset, pvars, self._cat(scores)
 
+    def _vars_to_pvar(self, var, offset, pvars):
+            if isinstance(var, Variable):
+                ix = var._ix + offset[var]
+                my_pvars = pvars[ix.ravel()].tolist()
+                return my_pvars
+
+            elif isinstance(var, Slice):
+                ix = var._ix + offset[var._base_var]
+                my_pvars = pvars[ix.ravel()].tolist()
+                return my_pvars
+
+            elif isinstance(var, tuple):
+                my_pvars = tuple(self._vars_to_pvar(v, offset, pvars)
+                                 for v in var)
+                return my_pvars
+
+            else:
+                raise NotImplementedError()
+
     def _make_factors(self, pfg, offset, pvars):
         pvars = np.array(pvars)  # so we may index by list
 
         scores_add = []
 
         for factor in self.factors:
-            var = factor._variables
-            if isinstance(var, Variable):
-                ix = var._ix + offset[var]
-                my_pvars = pvars[ix.ravel()].tolist()
-
-            elif isinstance(var, Slice):
-                ix = var._ix + offset[var._base_var]
-                my_pvars = pvars[ix.ravel()].tolist()
-
-            else:
-                raise NotImplementedError()
-            factor._construct(pfg, my_pvars)
+            my_pvars = self._vars_to_pvar(factor._variables, offset, pvars)
+            _, adds = factor._construct(pfg, my_pvars)
+            scores_add.extend(adds)
 
         return scores_add
 
@@ -127,6 +136,7 @@ class FactorGraph(object):
 
 
 def main():
+    from .factors import Xor, Budget, Pair
 
     np.set_printoptions(precision=3, suppress=True)
 
