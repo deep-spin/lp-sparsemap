@@ -75,6 +75,7 @@ class FactorSequence : public GenericFactor
                   const vector<double>& additional_log_potentials,
                   Configuration& configuration,
                   double* value)
+    override
     {
         // Decode using the Viterbi algorithm.
         int length = num_states_.size();
@@ -88,9 +89,7 @@ class FactorSequence : public GenericFactor
         for (int l = 0; l < num_states; ++l) {
             values[0][l] =
               GetNodeScore(
-                0, l, variable_log_potentials, additional_log_potentials) +
-              GetEdgeScore(
-                0, 0, l, variable_log_potentials, additional_log_potentials);
+                0, l, variable_log_potentials, additional_log_potentials);
             path[0][l] = -1; // This won't be used.
         }
 
@@ -127,12 +126,7 @@ class FactorSequence : public GenericFactor
         double best_value = -std::numeric_limits<double>::infinity();
         int best = -1;
         for (int l = 0; l < num_states_[length - 1]; ++l) {
-            double val =
-              values[length - 1][l] + GetEdgeScore(length,
-                                                   l,
-                                                   0,
-                                                   variable_log_potentials,
-                                                   additional_log_potentials);
+            double val = values[length - 1][l];
             if (best < 0 || val > best_value) {
                 best_value = val;
                 best = l;
@@ -155,6 +149,7 @@ class FactorSequence : public GenericFactor
                   const vector<double>& additional_log_potentials,
                   const Configuration configuration,
                   double* value)
+    override
     {
         const vector<int>* sequence =
           static_cast<const vector<int>*>(configuration);
@@ -164,18 +159,15 @@ class FactorSequence : public GenericFactor
             int state = (*sequence)[i];
             *value += GetNodeScore(
               i, state, variable_log_potentials, additional_log_potentials);
-            *value += GetEdgeScore(i,
-                                   previous_state,
-                                   state,
-                                   variable_log_potentials,
-                                   additional_log_potentials);
+            if (i > 0) {
+                *value += GetEdgeScore(i,
+                                       previous_state,
+                                       state,
+                                       variable_log_potentials,
+                                       additional_log_potentials);
+            }
             previous_state = state;
         }
-        *value += GetEdgeScore(sequence->size(),
-                               previous_state,
-                               0,
-                               variable_log_potentials,
-                               additional_log_potentials);
     }
 
     // Given a configuration with a probability (weight),
@@ -184,6 +176,7 @@ class FactorSequence : public GenericFactor
                                           double weight,
                                           vector<double>* variable_posteriors,
                                           vector<double>* additional_posteriors)
+    override
     {
         const vector<int>* sequence =
           static_cast<const vector<int>*>(configuration);
@@ -192,25 +185,23 @@ class FactorSequence : public GenericFactor
             int state = (*sequence)[i];
             AddNodePosterior(
               i, state, weight, variable_posteriors, additional_posteriors);
-            AddEdgePosterior(i,
-                             previous_state,
-                             state,
-                             weight,
-                             variable_posteriors,
-                             additional_posteriors);
+
+            if (i > 0) {
+                AddEdgePosterior(i,
+                                 previous_state,
+                                 state,
+                                 weight,
+                                 variable_posteriors,
+                                 additional_posteriors);
+            }
             previous_state = state;
         }
-        AddEdgePosterior(sequence->size(),
-                         previous_state,
-                         0,
-                         weight,
-                         variable_posteriors,
-                         additional_posteriors);
     }
 
     // Count how many common values two configurations have.
     int CountCommonValues(const Configuration& configuration1,
                           const Configuration& configuration2)
+    override
     {
         const vector<int>* sequence1 =
           static_cast<const vector<int>*>(configuration1);
@@ -228,6 +219,7 @@ class FactorSequence : public GenericFactor
     // Check if two configurations are the same.
     bool SameConfiguration(const Configuration& configuration1,
                            const Configuration& configuration2)
+    override
     {
         const vector<int>* sequence1 =
           static_cast<const vector<int>*>(configuration1);
@@ -244,6 +236,7 @@ class FactorSequence : public GenericFactor
 
     // Delete configuration.
     void DeleteConfiguration(Configuration configuration)
+    override
     {
         vector<int>* sequence = static_cast<vector<int>*>(configuration);
         delete sequence;
@@ -273,11 +266,9 @@ class FactorSequence : public GenericFactor
             offset += num_states_[i];
         }
         int index = 0;
-        for (int i = 0; i <= length; ++i) {
-            // If i == 0, the previous state is the start symbol.
-            int num_previous_states = (i > 0) ? num_states_[i - 1] : 1;
-            // If i == length, the previous state is the final symbol.
-            int num_current_states = (i < length) ? num_states_[i] : 1;
+        for (int i = 1; i < length; ++i) {
+            int num_previous_states = num_states_[i - 1];
+            int num_current_states = num_states_[i];
             index_edges_[i].resize(num_previous_states);
             for (int j = 0; j < num_previous_states; ++j) {
                 index_edges_[i][j].resize(num_current_states);
