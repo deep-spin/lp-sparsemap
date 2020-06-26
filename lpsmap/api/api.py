@@ -2,7 +2,6 @@ import numpy as np
 from lpsmap.ad3qp.factor_graph import PFactorGraph
 
 
-
 class Variable(object):
     """AD3 binary variables packed as a tensor."""
 
@@ -21,7 +20,6 @@ class Variable(object):
 
     # TODO: operator~,  same gist as above
     # TODO: how to
-    # TODO: smarter attr.value for redirection
 
 
 class Slice(object):
@@ -50,7 +48,6 @@ class FactorGraph(object):
         self.variables = []
         self.factors = []
 
-    # TODO: gradients here
     def variable_from(self, scores):
         var = Variable(scores=scores)
         self.variables.append(var)
@@ -116,7 +113,7 @@ class FactorGraph(object):
         for factor in self.factors:
             my_pvars = self._vars_to_pvar(factor._variables, offset, pvars)
             _, adds = factor._construct(pfg, my_pvars)
-            scores_add.extend(adds)
+            scores_add.extend((self._ravel(a) for a in adds))
 
         return scores_add
 
@@ -133,27 +130,3 @@ class FactorGraph(object):
         for var in self.variables:
             k = offset[var]
             var.value = u[k:k + var._ix.size].reshape(var._ix.shape)
-
-
-def main():
-    from .factors import Xor, Budget, Pair
-
-    np.set_printoptions(precision=3, suppress=True)
-
-    fg = FactorGraph()
-
-    d = 4
-    x = np.random.randn(d, d)
-    u = fg.variable_from(x)  # x are automatically used as scores
-
-    for i in range(d):
-        fg.add(Xor(u[i, :]))
-        fg.add(Budget(u[:, i], budget=2))
-
-    fg.solve()
-    print(u.value)
-
-
-if __name__ == '__main__':
-    main()
-

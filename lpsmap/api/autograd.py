@@ -1,15 +1,19 @@
-# TODO: handle additional potentials
+try:
+    import torch
+except ImportError as e:
+    import warnings
+    warnings.warn("pytorch cannot be found: TorchFactorGraph not available.")
+    raise e
+
 
 import numpy as np
-import torch
 
 from lpsmap.ad3qp.factor_graph import PFactorGraph
 
 from .api import FactorGraph
-from .factors import Xor, Budget, Pair
 
 
-class LPSparseMAP(torch.autograd.Function):
+class _LPSparseMAP(torch.autograd.Function):
 
     @classmethod
     def forward(cls, ctx, fg, eta_u, *eta_v):
@@ -20,7 +24,6 @@ class LPSparseMAP(torch.autograd.Function):
         ctx.shape = eta_u.shape
         value, u, add, status = fg.solve_qp_ad3()
         return torch.tensor(u, dtype=eta_u.dtype, device=eta_u.device)
-
 
     @classmethod
     def backward(cls, ctx, du):
@@ -54,43 +57,8 @@ class TorchFactorGraph(FactorGraph):
         offset, pvars, scores = self._make_variables(pfg)
         scores_add = self._make_factors(pfg, offset, pvars)
 
-        u = LPSparseMAP.apply(pfg, scores, *scores_add)
+        u = _LPSparseMAP.apply(pfg, scores, *scores_add)
 
         for var in self.variables:
             k = offset[var]
             var.value = u[k:k + var._ix.size].reshape(var._ix.shape)
-
-
-def main():
-    fg = TorchFactorGraph()
-    d = 4
-    x = torch.randn(d, d, requires_grad=True)
-    u = fg.variable_from(x)  # x are automatically used as scores
-
-    for i in range(d):
-        fg.add(Xor(u[i, :]))
-        fg.add(Budget(u[:, i], budget=2))
-
-    fg.solve()
-    print(u.value)
-
-    u.value[0, 0].backward()
-    print(x.grad)
-
-    print("Sequence")
-    fg = TorchFactorGraph()
-    x = torch.randn(d, requires_grad=True)
-    add = torch.randn(d - 1, requires_grad=True)
-    u = fg.variable_from(.1 * x)
-    fg.add(Pair(u[:-1], u[1:], add))
-    fg.solve()
-    print(u.value)
-
-    u.value[1].backward()
-    print(x.grad)
-    print(add.grad)
-
-
-if __name__ == '__main__':
-    main()
-

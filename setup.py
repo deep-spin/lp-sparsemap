@@ -198,8 +198,11 @@ libad3 = ('ad3', {
 extensions = [
     Extension('lpsmap.ad3qp.factor_graph', ["lpsmap/ad3qp/factor_graph.pyx"]),
     Extension('lpsmap.ad3qp.base', ["lpsmap/ad3qp/base.pyx"]),
-    Extension('lpsmap.ad3ext.factor_sequence',
-              ["lpsmap/ad3ext/factor_sequence.pyx"])
+    Extension('lpsmap.ad3ext.sequence',
+              ["lpsmap/ad3ext/sequence.pyx"]),
+    Extension('lpsmap.ad3ext.tree',
+              ["lpsmap/ad3ext/tree.pyx",
+               "lpsmap/ad3ext/DependencyDecoder.cpp"]),
 ]
 
 setup(name='lp-sparsemap',
