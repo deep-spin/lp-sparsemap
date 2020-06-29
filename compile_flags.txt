@@ -1,0 +1,6 @@
+-xc++
+-pthread
+-I/home/vlad/.pyenv/versions/main/include
+-I/home/vlad/.pyenv/versions/3.8.2/include/python3.8
+-I./ad3qp/
+-std=c++14

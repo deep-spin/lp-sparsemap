@@ -28,8 +28,9 @@ cdef extern from "ad3/Factor.h" namespace "AD3":
         vector[double] GetAdditionalLogPotentials()
         void SetAdditionalLogPotentials(vector[double] additional_log_potentials)
         int Degree()
+        int GetNumAdditionals()
         int GetLinkId(int i)
-        BinaryVariable *GetVariable(int i)
+        BinaryVariable* GetVariable(int i)
         void SolveMAP(vector[double] variable_log_potentials,
                       vector[double] additional_log_potentials,
                       vector[double] *variable_posteriors,
@@ -150,6 +151,11 @@ cdef extern from "ad3/FactorGraph.h" namespace "AD3":
                            bool owned_by_graph)
 
         void Print(ostream o)
+
+        size_t GetNumVariables()
+        size_t GetNumFactors()
+        BinaryVariable* GetBinaryVariable(int)
+        Factor* GetFactor(int)
 
 
 # and the fundamental extension types
