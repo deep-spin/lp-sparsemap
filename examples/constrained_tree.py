@@ -1,18 +1,14 @@
 import torch
 from lpsmap import TorchFactorGraph, DepTree, Budget
 
-# from each row, select all but diagonal with a mask
-def mask(k, n):
-    m = torch.ones(n, dtype=torch.bool)
-    m[k] = 0
-    return m
-
 
 def main(n=5, constrain=False):
 
     print(f"n={n}, constrain={constrain}")
 
+    torch.set_printoptions(precision=2, sci_mode=False)
     torch.manual_seed(4)
+
     x = torch.randn(n, n, requires_grad=True)
 
     fg = TorchFactorGraph()
@@ -21,7 +17,11 @@ def main(n=5, constrain=False):
 
     if constrain:
         for k in range(n):
-            fg.add(Budget(u[mask(k, n), k], budget=2))
+
+            # don't constrain the diagonal (root arc)
+            ix = list(range(k)) + list(range(k + 1, n))
+
+            fg.add(Budget(u[ix, k], budget=2))
 
     fg.solve()
     print(u.value)
@@ -31,6 +31,5 @@ def main(n=5, constrain=False):
 
 
 if __name__ == '__main__':
-    torch.set_printoptions(precision=2, sci_mode=False)
     main(constrain=False)
     main(constrain=True)

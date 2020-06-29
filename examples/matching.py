@@ -17,7 +17,7 @@ def main():
         fg.add(Xor(u[i, :]))
 
     for j in range(n):
-        fg.add(AtMostOne(u[:, i]))  # some cols may be 0
+        fg.add(AtMostOne(u[:, j]))  # some cols may be 0
 
     fg.solve()
     print(u.value)

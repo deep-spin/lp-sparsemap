@@ -19,7 +19,6 @@ class Variable(object):
         return f"Variable(shape={self.shape})"
 
     # TODO: operator~,  same gist as above
-    # TODO: how to
 
 
 class Slice(object):

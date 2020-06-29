@@ -1,6 +1,7 @@
 from lpsmap.ad3ext.sequence import PFactorSequence
 from lpsmap.ad3ext.tree import PFactorTree
 
+
 class Sequence(object):
     def __init__(self, variables, additionals):
         """
