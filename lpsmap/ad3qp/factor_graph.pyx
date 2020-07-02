@@ -16,6 +16,8 @@ from .base cimport MultiVariable
 from .base cimport FactorGraph
 from .base cimport PBinaryVariable, PMultiVariable, PFactor, PGenericFactor
 
+from .base cimport GenericFactor
+
 
 cdef int _binary_vars_to_vector(
         list p_vars, vector[BinaryVariable*]& c_vars) except -1:
@@ -628,4 +630,14 @@ cdef class PFactorGraph:
                 v = scores[k]
                 f.SetAdditionalLogPotentials(v)
                 k += 1
+
+    def set_inner_iter(self, int max_iter):
+        cdef size_t n_factors = self.thisptr.GetNumFactors()
+        cdef Factor* f
+        cdef int i
+
+        for i in range(n_factors):
+            f = self.thisptr.GetFactor(i)
+            if f.IsGeneric():
+                (<GenericFactor*?> f).SetQPMaxIter(max_iter)
 
