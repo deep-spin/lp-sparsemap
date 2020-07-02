@@ -30,6 +30,7 @@ cdef extern from "ad3/Factor.h" namespace "AD3":
         int Degree()
         int GetNumAdditionals()
         int GetLinkId(int i)
+        bool IsGeneric()
         BinaryVariable* GetVariable(int i)
         void SolveMAP(vector[double] variable_log_potentials,
                       vector[double] additional_log_potentials,

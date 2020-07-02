@@ -35,7 +35,7 @@ class Slice(object):
 
     @property
     def value(self):
-        return self._base_var.value[self._ix]
+        return self._base_var.value.flat[self._ix]
 
     def __repr__(self):
         return f"Slice(shape={self.shape})"
@@ -48,15 +48,18 @@ class FactorGraph(object):
         self.factors = []
 
     def variable_from(self, scores):
+        """Initialize a tensor of variables with user-specified scores."""
         var = Variable(scores=scores)
         self.variables.append(var)
         return var
 
     def variable(self, shape):
+        """Initialize a tensor of variables with zero scores."""
         scores = np.zeros(shape)
         return self.variable_from(scores)
 
     def add(self, factor):
+        """Connect a factor to the factor graph."""
         self.factors.append(factor)
 
     def _cat(self, scores):
@@ -79,7 +82,6 @@ class FactorGraph(object):
             scores.append(self._ravel(var._scores))
             for i in range(var._ix.size):
                 v = pfg.create_binary_variable()
-                # v.set_log_potential(var._scores.flat[i])
                 pvars.append(v)
 
         n_vars = offset_
@@ -117,6 +119,11 @@ class FactorGraph(object):
         return scores_add
 
     def solve(self):
+        """Solve the LP-SparseMAP quadratic optimization problem.
+
+        If succesful, all variables `u` connected to the factor graph will have
+        the `u.value` attribute set.
+        """
         pfg = PFactorGraph()
 
         offset, pvars, scores = self._make_variables(pfg)

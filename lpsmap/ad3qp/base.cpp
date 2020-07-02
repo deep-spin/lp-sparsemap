@@ -976,7 +976,7 @@ struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 
-/* "lpsmap/ad3qp/base.pxd":163
+/* "lpsmap/ad3qp/base.pxd":164
  * # and the fundamental extension types
  * 
  * cdef class PBinaryVariable:             # <<<<<<<<<<<<<<
@@ -990,7 +990,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PBinaryVariable {
 };
 
 
-/* "lpsmap/ad3qp/base.pxd":168
+/* "lpsmap/ad3qp/base.pxd":169
  * 
  * 
  * cdef class PMultiVariable:             # <<<<<<<<<<<<<<
@@ -1005,7 +1005,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PMultiVariable {
 };
 
 
-/* "lpsmap/ad3qp/base.pxd":175
+/* "lpsmap/ad3qp/base.pxd":176
  * 
  * 
  * cdef class PFactor:             # <<<<<<<<<<<<<<
@@ -1019,7 +1019,7 @@ struct __pyx_obj_6lpsmap_5ad3qp_4base_PFactor {
 };
 
 
-/* "lpsmap/ad3qp/base.pxd":180
+/* "lpsmap/ad3qp/base.pxd":181
  * 
  * 
  * cdef class PGenericFactor(PFactor):             # <<<<<<<<<<<<<<
