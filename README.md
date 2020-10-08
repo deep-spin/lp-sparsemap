@@ -36,7 +36,8 @@ For examples and tests: numpy, pytest.
 
 ```
 export EIGEN_DIR=/path/to/eigen
-pip install .              # builds ad3, lpsmap and installs
+python setup.py build_clib  # builds ad3 in-place
+pip install .               # builds lpsmap and installs
 ```
 
 *In-place installation:*
