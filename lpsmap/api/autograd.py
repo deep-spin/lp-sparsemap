@@ -37,7 +37,7 @@ class _LPSparseMAP(torch.autograd.Function):
         # convert additional gradients into tensors
         add = (torch.tensor(x, dtype=dtype, device=device) for x in add if x)
 
-        return None, out.to(dtype=dtype, device=device), *add
+        return None, out.to(dtype=dtype, device=device), (*add)
 
 
 class TorchFactorGraph(FactorGraph):
