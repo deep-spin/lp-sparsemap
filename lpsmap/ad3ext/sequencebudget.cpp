@@ -7,9 +7,11 @@
             "ad3qp/ad3/Factor.h",
             "ad3qp/ad3/FactorGraph.h",
             "ad3qp/ad3/GenericFactor.h",
-            "ad3qp/ad3/MultiVariable.h"
+            "ad3qp/ad3/MultiVariable.h",
+            "lpsmap/ad3ext/FactorSequenceBudget.h"
         ],
         "include_dirs": [
+            "lpsmap/ad3ext",
             "ad3qp"
         ],
         "language": "c++",

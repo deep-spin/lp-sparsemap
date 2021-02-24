@@ -14,15 +14,17 @@ def main():
     transition = torch.zeros((n+1,2,2), requires_grad=True)
     transition[:, 1, 1] = 1./temperature
 
-    fg = TorchFactorGraph()
-    u = fg.variable_from(x/temperature)
+    for budget in range(12):
+        fg = TorchFactorGraph()
+        u = fg.variable_from(x/temperature)
 
-    fg.add(SequenceBudget(u, transition, 2))
-    #fg.add(Sequence(u, transition))
-    #fg.add(Budget(u, 2))
-    fg.solve()
+        fg.add(SequenceBudget(u, transition, budget))
+        #fg.add(Sequence(u, transition))
+        #fg.add(Budget(u, 2))
+        fg.solve()
 
-    print("solution: \n", u.value[:,0])
+        print("solution: \n", u.value[:,0])
+        print(sum(u.value[:,0]))
 
 if __name__ == '__main__':
     main()
