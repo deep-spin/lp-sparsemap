@@ -875,6 +875,84 @@ FactorGraph::RunBranchAndBound(double cumulative_value,
     return status;
 }
 
+bool
+FactorGraph::CheckAcyclic()
+{
+    bool acyclic = true;
+
+    for (size_t i = 0; i < variables_.size(); ++i) {
+        if (variables_[i]->Degree() > 1) {
+            acyclic = false;
+            break;
+        }
+    }
+
+    return acyclic;
+}
+
+/* standalone argmax function for acyclic factor graphs.
+ * should avoid the cmplication of the RunAD3 function.
+ * */
+double
+FactorGraph::MaximizeAcyclic(vector<double>* posteriors,
+                             vector<double>* additionals)
+{
+
+    double value = 0;
+    posteriors->resize(variables_.size(), 0.0);
+
+    vector<int> add_offsets(factors_.size());
+    int offset = 0;
+    for (size_t j = 0; j < factors_.size(); ++j) {
+        add_offsets[j] = offset;
+        offset += factors_[j]->GetNumAdditionals();
+    }
+
+    additionals->resize(offset);
+
+    // deal with zero-degree variables if any
+    for (size_t i = 0; i < variables_.size(); ++i) {
+        auto v = variables_[i];
+        if (v->Degree() == 0) {
+            auto eta_ui = v->GetLogPotential();
+            (*posteriors)[i] = (eta_ui > 0) ? 1.0 : 0.0;
+            value += (eta_ui > 0) ? eta_ui : 0;
+        }
+    }
+
+    // run maximize for each factor
+    for (size_t j = 0; j < factors_.size(); ++j) {
+        Factor* f = factors_[j];
+        size_t factor_degree = f->Degree();
+        auto eta_uf = f->GetMutableCachedVariableLogPotentials();
+        f->ComputeCachedAdditionalLogPotentials(1.0);
+        eta_uf->resize(factor_degree);
+
+        for (size_t i = 0; i < factor_degree; ++i) {
+            (*eta_uf)[i] = f->GetVariable(i)->GetLogPotential();
+        }
+
+        double value_f;
+        f->SolveMAPCached(&value_f);
+        value += value_f;
+
+        const vector<double>& mu_uf = f->GetCachedVariablePosteriors();
+
+        for (size_t i = 0; i < factor_degree; ++i) {
+            auto k = f->GetVariable(i)->GetId();
+            (*posteriors)[k] = mu_uf[i];
+        }
+
+        const auto& mu_vf = f->GetCachedAdditionalPosteriors();
+        offset = add_offsets[j];
+        for (size_t i = 0; i < mu_vf.size(); ++i) {
+            (*additionals)[offset] = mu_vf[i];
+            ++offset;
+        }
+    }
+    return value;
+}
+
 int
 FactorGraph::RunAD3(double lower_bound,
                     vector<double>* posteriors,
@@ -895,7 +973,6 @@ FactorGraph::RunAD3(double lower_bound,
     gettimeofday(&start, NULL);
 
     // initialize for QP factor solving
-
     if (solve_qp) {
         for (auto&& factor : factors_) {
             size_t factor_degree = factor->Degree();
@@ -905,6 +982,16 @@ FactorGraph::RunAD3(double lower_bound,
             factor->SetDegreeSequence(degrees);
             factor->SetAdjustDegree(true);
         }
+    }
+
+    // for acyclic graph, can avoid iterative algorithm.
+    if (!solve_qp && autodetect_acyclic_ && CheckAcyclic()) {
+        if (verbosity_ > 1) {
+            std::cout << "Factor graph is acyclic; using this. \n"
+                      << std::endl;
+        }
+        *value = MaximizeAcyclic(posteriors, additional_posteriors);
+        return STATUS_OPTIMAL_INTEGER;
     }
 
     // Stopping criterion parameters.

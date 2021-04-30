@@ -99,7 +99,7 @@ class TorchFactorGraph(FactorGraph):
 
 
     def solve_map(self, max_iter=1000, max_inner_iter=10, tol=1e-6, step_size=.1,
-            adapt=True, verbose=False):
+            adapt=True, verbose=False, autodetect_acyclic=True):
         """
          Parameters
         ---------
@@ -125,6 +125,10 @@ class TorchFactorGraph(FactorGraph):
             Degree of verbosity of debugging information to display. By default,
             nothing is printed.
 
+        autodetect_acyclic : boolean, default: True
+            If set, we will automatically detect if the factor graph
+            is acyclic, and return an exact solution directly.
+
         """
         pfg = PFactorGraph()
 
@@ -137,6 +141,7 @@ class TorchFactorGraph(FactorGraph):
         pfg.set_max_iterations_ad3(max_iter)
         pfg.set_residual_threshold_ad3(tol)
         pfg.set_inner_iter(max_inner_iter)
+        pfg.set_autodetect_acyclic(autodetect_acyclic)
 
         eta_u = scores
         eta_v = scores_add
@@ -149,4 +154,3 @@ class TorchFactorGraph(FactorGraph):
         for var in self.variables:
             k = offset[var]
             var.value = u[k:k + var._ix.size].reshape(var._ix.shape)
-
