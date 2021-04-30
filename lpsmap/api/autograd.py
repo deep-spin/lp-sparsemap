@@ -131,7 +131,7 @@ class TorchFactorGraph(FactorGraph):
         offset, pvars, scores = self._make_variables(pfg)
         scores_add = self._make_factors(pfg, offset, pvars)
 
-        pfg.set_verbosity(100)
+        pfg.set_verbosity(verbose)
         pfg.set_eta_ad3(step_size)
         pfg.adapt_eta_ad3(adapt)
         pfg.set_max_iterations_ad3(max_iter)
@@ -144,7 +144,6 @@ class TorchFactorGraph(FactorGraph):
         detached_eta_v = [np.atleast_1d(x.detach().numpy()) for x in eta_v]
         pfg.set_all_additionals(detached_eta_v)
         value, u, add, status = pfg.solve_lp_map_ad3()
-        print(status)
         u = torch.tensor(u, dtype=eta_u.dtype, device=eta_u.device)
 
         for var in self.variables:
