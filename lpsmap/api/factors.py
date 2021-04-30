@@ -59,7 +59,10 @@ class Pair(object):
         n = len(vars_i)
         adds = self._additionals
         factors = [
-            fg.create_factor_pair([vars_i[k], vars_j[k]], adds[k])
+            fg.create_factor_pair([
+                vars_i[k],
+                vars_j[k]],
+                adds[k])
             for k in range(n)
         ]
         add_tensors = [adds[k] for k in range(n)]
