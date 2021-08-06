@@ -2,7 +2,7 @@ import os
 import sys
 import re
 import warnings
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, convert_path
 from setuptools.extension import Extension
 from setuptools.command.build_ext import build_ext as orig_build_ext
 from setuptools.command.build_clib import build_clib as orig_build_clib
@@ -12,7 +12,6 @@ from setuptools.command.bdist_egg import bdist_egg as orig_bdist_egg
 
 from Cython.Build import cythonize
 
-
 AD3_FLAGS_UNIX = [
     '-std=c++11',
     '-Wno-sign-compare',
@@ -20,13 +19,11 @@ AD3_FLAGS_UNIX = [
     '-ffast-math',
 ]
 
-
 AD3_FLAGS_MSVC = [
     '/O2',
     '/fp:fast',
     '/wd4267'  # suppress sign-compare--like warning
 ]
-
 
 AD3_CFLAGS =  {
     'cygwin' : AD3_FLAGS_UNIX,
@@ -173,7 +170,6 @@ cmdclass = {
     'install_lib': install_lib,
 }
 
-
 libad3 = ('ad3', {
     'language': "c++",
     'sources': ['ad3qp/ad3/FactorGraph.cpp',
@@ -187,7 +183,6 @@ libad3 = ('ad3', {
                      ],
 })
 
-
 extensions = [
     Extension('lpsmap.ad3qp.factor_graph', ["lpsmap/ad3qp/factor_graph.pyx"]),
     Extension('lpsmap.ad3qp.base', ["lpsmap/ad3qp/base.pyx"]),
@@ -198,8 +193,13 @@ extensions = [
                "lpsmap/ad3ext/DependencyDecoder.cpp"]),
 ]
 
+# read version information
+version_ns = {}
+with open(convert_path('lpsmap/version.py')) as f:
+    exec(f.read(), version_ns)
+
 setup(name='lp-sparsemap',
-      version="0.9",
+      version=version_ns['__version__'],
       libraries=[libad3],
       author="Vlad Niculae",
       packages=find_packages(),
