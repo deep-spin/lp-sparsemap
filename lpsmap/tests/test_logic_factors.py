@@ -7,9 +7,9 @@ import pytest
 from numpy.testing import assert_allclose
 
 from lpsmap.ad3qp.factor_graph import PFactorGraph
-from lpsmap.sparsemap_fw import SparseMAPFW
 
 from .make_edge_cases import make_edge_cases
+from .fw import SparseMAPFW
 
 
 def _func_best_structure(eta, negated, f):
