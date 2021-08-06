@@ -20,9 +20,12 @@ jobs:
         uses: pypa/cibuildwheel@v2.0.1
         env:
            CIBW_BUILD: ${{ matrix.cibw_python }}
-           CIBW_BEFORE_BUILD: yum install eigen3-devel -y
+           CIBW_BEFORE_BUILD: |
+               pip install --upgrade pip
+               yum install eigen3-devel -y
            CIBW_TEST_COMMAND: pytest --pyargs lpsmap
            CIBW_BEFORE_TEST: |
+               pip install pytest 
                pip install torch==1.8.1+cpu -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
            CIBW_ARCHS_LINUX: auto64 
            CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.cibw_manylinux }}
