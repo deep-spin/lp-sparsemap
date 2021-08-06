@@ -17,7 +17,7 @@ AD3_FLAGS_UNIX = [
     '-std=c++11',
     '-Wno-sign-compare',
     '-Wno-overloaded-virtual',
-    '-ffast-math'
+    '-ffast-math',
     '-c',
 ]
 
