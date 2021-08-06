@@ -21,7 +21,6 @@ class SparseMAPFW(object):
             The number of FW iterations to run.
         variant: {'vanilla' | 'away-step' | 'pairwise'}
             FW variant to run. Pairwise seems to perform the best.
-        line search: {'exact' | 'adaptive' | 'oblivious'}
         tol: float,
             Tolerance in the Wolfe gap, for convergence.
         """
@@ -29,7 +28,6 @@ class SparseMAPFW(object):
         self.penalize_v = penalize_v
         self.max_iter = max_iter
         self.variant = variant
-        self.line_search = line_search
         self.tol = tol
 
     def _reconstruct_guess(self, active_set):
