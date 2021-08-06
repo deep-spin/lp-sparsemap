@@ -37,7 +37,7 @@ def _func_best_structure(eta, negated, f):
 
 
 def _make_factor(eta, negated, fname, **kwargs):
-    negated_flag = np.zeros_like(eta, dtype=np.bool)
+    negated_flag = np.zeros_like(eta, dtype=bool)
     negated_flag[negated] = True
     negated_flag = list(negated_flag)
 

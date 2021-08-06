@@ -1,3 +1,4 @@
+from collections import defaultdict
 import numpy as np
 
 class SparseMAPFW(object):
@@ -86,7 +87,7 @@ class SparseMAPFW(object):
             denom += np.sum(d_v ** 2)
         return denom
 
-    def solve(self, eta_u, eta_v, full_path=False, ls_eta=.99, ls_tau=2):
+    def solve(self, eta_u, eta_v, full_path=False):
 
         eta_u = np.asarray(eta_u, dtype=np.float)
         eta_v = np.asarray(eta_v, dtype=np.float)
