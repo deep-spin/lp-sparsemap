@@ -22,8 +22,7 @@ AD3_FLAGS_UNIX = [
     '-c',
     '-fmessage-length=0',
     '-fPIC',
-    '-ffast-math',
-    '-march=native'
+    '-ffast-math'
 ]
 
 
