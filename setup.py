@@ -15,14 +15,13 @@ from Cython.Build import cythonize
 
 AD3_FLAGS_UNIX = [
     '-std=c++11',
-    '-O3',
-    '-Wall',
-    '-Wno-sign-compare',
-    '-Wno-overloaded-virtual',
-    '-c',
-    '-fmessage-length=0',
-    '-fPIC',
-    '-ffast-math'
+    # '-O3',
+    # '-Wall',
+    # '-Wno-sign-compare',
+    # '-Wno-overloaded-virtual',
+    # '-c',
+    # '-fPIC',
+    # '-ffast-math'
 ]
 
 
