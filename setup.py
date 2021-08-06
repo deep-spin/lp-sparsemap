@@ -210,6 +210,8 @@ setup(name='lp-sparsemap',
       libraries=[libad3],
       author="Vlad Niculae",
       packages=['lpsmap', 'lpsmap.api'],
+      install_requires=["numpy>=1.14.6"],
+      extras_require={'torch': 'torch>=1.8.1'}
       package_data={'lpsmap': ['ad3qp/*.pxd', 'core/lib/*', 'core/include/ad3/*']},
       cmdclass=cmdclass,
       include_package_data=True,
