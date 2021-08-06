@@ -9,10 +9,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04]
-        cibw_python: ["cp38-*"]
-        #os: [ubuntu-20.04, macos-10.15]
-        #cibw_python: ["cp38-*", "cp39-*"]
+        os: [ubuntu-20.04, macos-10.15]
+        cibw_python: ["cp38-*", "cp39-*"]
         cibw_manylinux: ["manylinux2014"]
 
     steps:

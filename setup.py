@@ -18,7 +18,6 @@ AD3_FLAGS_UNIX = [
     '-Wno-sign-compare',
     '-Wno-overloaded-virtual',
     '-ffast-math',
-    '-c',
 ]
 
 
