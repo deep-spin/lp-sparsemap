@@ -1,0 +1,47 @@
+name: Build
+
+on: [push, pull_request, release]
+
+jobs:
+  build_wheels:
+    name: Build wheels
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, macos-10.15]
+        cibw_python: ["cp38-*", "cp39-*"]
+        cibw_manylinux: ["manylinux2014"]
+
+    steps:
+      - uses: actions/checkout@v2
+   
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.0.1
+        env:
+           CIBW_BUILD: ${{ matrix.cibw_python }}
+           CIBW_BUILD_VERBOSITY: 3
+           CIBW_BEFORE_BUILD_LINUX: |
+               pip install -U pip
+               yum install eigen3-devel -y
+           CIBW_BEFORE_BUILD_MACOS: |
+               pip install -U pip
+               brew install eigen
+           CIBW_ARCHS_MACOS: x86_64 arm64
+           CIBW_ARCHS_LINUX: auto64 
+           CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.cibw_manylinux }}
+           MACOS_DEPLOYMENT_TARGET: 10.14
+           HOMEBREW_NO_INSTALL_CLEANUP: 1
+           CIBW_BEFORE_TEST_LINUX: |
+               pip install pytest
+               pip install torch==1.8.1+cpu -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+           CIBW_BEFORE_TEST_MACOS: |
+               pip install pytest
+               pip install torch==1.8.1 -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+           CIBW_TEST_COMMAND: |
+               pytest --pyargs lpsmap
+   
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wheels
+          path: ./wheelhouse/*.whl

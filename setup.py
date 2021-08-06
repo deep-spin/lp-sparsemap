@@ -2,7 +2,7 @@ import os
 import sys
 import re
 import warnings
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.extension import Extension
 from setuptools.command.build_ext import build_ext as orig_build_ext
 from setuptools.command.build_clib import build_clib as orig_build_clib
@@ -15,22 +15,15 @@ from Cython.Build import cythonize
 
 AD3_FLAGS_UNIX = [
     '-std=c++11',
-    '-O3',
-    '-Wall',
     '-Wno-sign-compare',
     '-Wno-overloaded-virtual',
-    '-c',
-    '-fmessage-length=0',
-    '-fPIC',
     '-ffast-math',
-    '-march=native'
 ]
 
 
 AD3_FLAGS_MSVC = [
     '/O2',
     '/fp:fast',
-    '/favor:INTEL64',
     '/wd4267'  # suppress sign-compare--like warning
 ]
 
@@ -209,7 +202,9 @@ setup(name='lp-sparsemap',
       version="0.9",
       libraries=[libad3],
       author="Vlad Niculae",
-      packages=['lpsmap', 'lpsmap.api'],
+      packages=find_packages(),
+      install_requires=["numpy>=1.14.6"],
+      extras_require={'torch': 'torch>=1.8.1'},
       package_data={'lpsmap': ['ad3qp/*.pxd', 'core/lib/*', 'core/include/ad3/*']},
       cmdclass=cmdclass,
       include_package_data=True,
