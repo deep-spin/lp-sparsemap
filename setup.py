@@ -15,12 +15,12 @@ from Cython.Build import cythonize
 
 AD3_FLAGS_UNIX = [
     '-std=c++11',
-    # '-O3',
+    '-O3',
     # '-Wall',
     # '-Wno-sign-compare',
     # '-Wno-overloaded-virtual',
     # '-c',
-    # '-fPIC',
+    '-fPIC',
     # '-ffast-math'
 ]
 
@@ -28,7 +28,6 @@ AD3_FLAGS_UNIX = [
 AD3_FLAGS_MSVC = [
     '/O2',
     '/fp:fast',
-    '/favor:INTEL64',
     '/wd4267'  # suppress sign-compare--like warning
 ]
 
