@@ -28,9 +28,9 @@ jobs:
            CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.cibw_manylinux }}
            MACOS_DEPLOYMENT_TARGET: 10.14
            HOMEBREW_NO_INSTALL_CLEANUP: 1
-           CIBW_BEFORE_TEST: |
-               pip install pytest 
-               pip install torch==1.8.1+cpu -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+           CIBW_BEFORE_TEST: pip install pytest 
+           CIBW_BEFORE_TEST_LINUX: pip install torch==1.8.1+cpu -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+           CIBW_BEFORE_TEST_MACOS: pip install torch==1.8.1 -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
            CIBW_TEST_COMMAND: pytest --pyargs lpsmap
    
       - uses: actions/upload-artifact@v2
