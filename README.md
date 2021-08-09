@@ -1,4 +1,4 @@
-![wheels](https://github.com/ltl-uva/logdecomp/actions/workflows/wheels.yml/badge.svg)
+![wheels](https://github.com/deep-spin/lp-sparsemap/actions/workflows/wheels.yml/badge.svg)
 [![PyPI version](https://badge.fury.io/py/lp-sparsemap.svg)](https://badge.fury.io/py/lp-sparsemap)
 
 # LP-SparseMAP
