@@ -1,3 +1,6 @@
+![wheels](https://github.com/ltl-uva/logdecomp/actions/workflows/wheels.yml/badge.svg)
+[![PyPI version](https://badge.fury.io/py/lp-sparsemap.svg)](https://badge.fury.io/py/lp-sparsemap)
+
 # LP-SparseMAP
 Differentiable sparse structured prediction in coarse factor graphs
 
@@ -28,19 +31,18 @@ Prediction. https://arxiv.org/abs/2001.04437
 
 *Requirements:*
  - Cython
- - [Eigen](https://gitlab.com/libeigen/eigen)
+ - [Eigen](https://gitlab.com/libeigen/eigen) (if it's a non-standard directory,
+   set `EIGEN_DIR=/path/to/eigen`.)
 
 For examples and tests: numpy, pytest.
 
 *Installation:*
 
 ```
-export EIGEN_DIR=/path/to/eigen
-python setup.py build_clib  # builds ad3 in-place
-pip install .               # builds lpsmap and installs
+pip install lp-sparsemap    # installs a wheel, if available.
 ```
 
-*In-place installation:*
+*In-place installation from source:*
 
 ```
 export EIGEN_DIR=/path/to/eigen
