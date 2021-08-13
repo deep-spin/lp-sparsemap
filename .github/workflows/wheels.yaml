@@ -27,12 +27,6 @@ jobs:
            CIBW_BEFORE_BUILD_MACOS: |
                pip install -U pip
                brew install eigen
-               gcc --version
-               clang --version
-               g++ --version
-               clang++ --version
-               exit
-           CIBW_ENVIRONMENT_MACOS: CC=/usr/bin/clang CXX=/usr/bin/clang++
            CIBW_ARCHS_MACOS: x86_64 arm64
            CIBW_ARCHS_LINUX: auto64 
            CIBW_MANYLINUX_X86_64_IMAGE: ${{ matrix.cibw_manylinux }}
