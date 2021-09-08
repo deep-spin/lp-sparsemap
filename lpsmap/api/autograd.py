@@ -17,8 +17,8 @@ class _LPSparseMAP(torch.autograd.Function):
 
     @classmethod
     def forward(cls, ctx, fg, eta_u, *eta_v):
-        fg.set_log_potentials(eta_u.detach().numpy())
-        detached_eta_v = [np.atleast_1d(x.detach().numpy()) for x in eta_v]
+        fg.set_log_potentials(eta_u.detach().cpu().numpy())
+        detached_eta_v = [np.atleast_1d(x.detach().cpu().numpy()) for x in eta_v]
         fg.set_all_additionals(detached_eta_v)
         ctx.fg = fg
         ctx.shape = eta_u.shape
@@ -30,7 +30,7 @@ class _LPSparseMAP(torch.autograd.Function):
         dtype = du.dtype
         device = du.device
 
-        du = du.to(dtype=torch.double, device="cpu").detach().numpy()
+        du = du.to(dtype=torch.double, device="cpu").detach().cpu().numpy()
         out = torch.empty(ctx.shape, dtype=torch.double, device='cpu')
         add = ctx.fg.jacobian_vec(du, out.numpy())
 
