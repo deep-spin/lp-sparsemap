@@ -13,13 +13,14 @@ from setuptools.command.bdist_egg import bdist_egg as orig_bdist_egg
 from Cython.Build import cythonize
 
 AD3_FLAGS_UNIX = [
-    '-std=c++11',
+    '-std=c++14',
     '-Wno-sign-compare',
     '-Wno-overloaded-virtual',
     '-ffast-math',
 ]
 
 AD3_FLAGS_MSVC = [
+    '/std:c++14',
     '/O2',
     '/fp:fast',
     '/wd4267'  # suppress sign-compare--like warning
