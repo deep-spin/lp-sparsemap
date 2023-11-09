@@ -1013,7 +1013,7 @@ FactorBUDGET::SolveMAP(const vector<double>& variable_log_potentials,
         sum = 0.0;
         for (size_t k = 0; k < GetBudget(); ++k) {
             valaux = -scores[k].first;
-            if (valaux < 0.0)
+            if (valaux < 0.0 && !ForcedBudget())
                 break;
             int f = scores[k].second;
             (*variable_posteriors)[f] = negated_[f] ? 0.0 : 1.0;
@@ -1045,7 +1045,7 @@ FactorBUDGET::SolveQP(const vector<double>& variable_log_potentials,
     double budget = GetBudget();
     tight_ = false;
 
-    if (s > budget) {
+    if (s > budget || ForcedBudget()) {
         tight_ = true;
 
         FlipNegatedForQP(variable_log_potentials, variable_posteriors);

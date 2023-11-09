@@ -12,7 +12,7 @@ def main():
     n = 12
     x = torch.randn((n,2), requires_grad=True)
     transition = torch.zeros((n+1,2,2), requires_grad=True)
-    transition[:, 1, 1] = 1./temperature
+    transition.data[:, 1, 1] = 1./temperature
 
     for budget in range(12):
         fg = TorchFactorGraph()
