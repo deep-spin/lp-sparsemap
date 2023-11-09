@@ -574,6 +574,10 @@ class FactorBUDGET : public Factor
     size_t GetBudget() { return budget_; }
     void SetBudget(size_t budget) { budget_ = budget; }
 
+    // Get/set forced budget (false means can be <=, true means must be =).
+    bool ForcedBudget() { return forced_budget_; }
+    void ForceBudget(bool forced) { forced_budget_ = forced; }
+
     // Add evidence information to the factor.
     int AddEvidence(vector<bool>* active_links,
                     vector<int>* evidence,
@@ -602,6 +606,9 @@ class FactorBUDGET : public Factor
                      vector<double>& out_add);
 
   private:
+    // Forced budget (false means can be <=, true means must be =).
+    bool forced_budget_;
+  
     // Budget value.
     size_t budget_;
 

@@ -272,20 +272,24 @@ class FactorGraph
     // Create a new BUDGET factor.
     Factor* CreateFactorBUDGET(const vector<BinaryVariable*>& variables,
                                int budget,
+			       bool force_budget = false,
                                bool owned_by_graph = true)
     {
         vector<bool> negated;
-        return CreateFactorBUDGET(variables, negated, budget, owned_by_graph);
+        return CreateFactorBUDGET(variables, negated, budget, force_budget,
+				  owned_by_graph);
     }
 
     Factor* CreateFactorBUDGET(const vector<BinaryVariable*>& variables,
                                const vector<bool>& negated,
                                int budget,
+			       bool force_budget = false,
                                bool owned_by_graph = true)
     {
         Factor* factor = new FactorBUDGET;
         DeclareFactor(factor, variables, negated, owned_by_graph);
         static_cast<FactorBUDGET*>(factor)->SetBudget(budget);
+        static_cast<FactorBUDGET*>(factor)->ForceBudget(force_budget);
         return factor;
     }
 
