@@ -22,7 +22,7 @@ def main():
 
             #fg.add(SequenceBudget(u, transition, budget))
             #fg.add(Sequence(u, transition))
-            fg.add(Budget(u, budget, force_budget))
+            fg.add(Budget(u, budget, force_budget=force_budget))
             #fg.solve()
             fg.solve(verbose=0)
 
