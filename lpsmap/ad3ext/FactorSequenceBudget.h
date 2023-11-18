@@ -30,11 +30,11 @@ using namespace std;
 namespace AD3 {
 
 class FactorSequenceBudget : public GenericFactor {
- protected:
-  virtual double GetNodeScore(int position,
-                                int state,
-                                const vector<double>& variable_log_potentials,
-                                const vector<double>& additional_log_potentials)
+  protected:
+    virtual double GetNodeScore(int position,
+				int state,
+				const vector<double>& variable_log_potentials,
+				const vector<double>& additional_log_potentials)
     {
         return variable_log_potentials[offset_states_[position] + state];
     }
@@ -221,8 +221,9 @@ class FactorSequenceBudget : public GenericFactor {
                        additional_posteriors);
       if (i > 0) {
         AddEdgePosterior(i, previous_state, state, weight,
-                       variable_posteriors,
-                       additional_posteriors);}
+                         variable_posteriors,
+                         additional_posteriors);
+      }
       previous_state = state;
     }
     AddEdgePosterior(sequence->size(), previous_state, 0, weight,

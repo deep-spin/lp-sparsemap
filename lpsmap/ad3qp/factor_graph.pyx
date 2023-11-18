@@ -396,6 +396,9 @@ cdef class PFactorGraph:
     def set_residual_threshold_ad3(self, double threshold):
         self.thisptr.SetResidualThresholdAD3(threshold)
 
+    def set_autodetect_acyclic(self, bool autodetect):
+        self.thisptr.SetAutodetectAcyclic(autodetect)
+
     def solve_lp_map_ad3(self):
         cdef vector[double] posteriors
         cdef vector[double] additional_posteriors

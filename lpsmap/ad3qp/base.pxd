@@ -89,6 +89,7 @@ cdef extern from "ad3/FactorGraph.h" namespace "AD3":
         void AdaptEtaAD3(bool adapt)
         void SetMaxIterationsAD3(int max_iterations)
         void SetResidualThresholdAD3(double threshold)
+        void SetAutodetectAcyclic(bool autodetect)
         void FixMultiVariablesWithoutFactors()
         int SolveLPMAPWithAD3(vector[double]* posteriors,
                               vector[double]* additional_posteriors,

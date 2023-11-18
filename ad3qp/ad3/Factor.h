@@ -190,7 +190,10 @@ class Factor
     void SetAdditionalLogPotentials(
       const vector<double>& additional_log_potentials)
     {
-        assert(additional_log_potentials.size() == GetNumAdditionals());
+        if (additional_log_potentials.size() != GetNumAdditionals()) {
+	    throw std::invalid_argument(
+	      "Invalid size of additional log potentials.");
+	}
         additional_log_potentials_ = additional_log_potentials;
     }
 
