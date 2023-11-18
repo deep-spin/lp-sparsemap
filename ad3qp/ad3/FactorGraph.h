@@ -417,6 +417,7 @@ class FactorGraph
     }
     void SetEtaAD3(double eta) { ad3_eta_ = eta; }
     void AdaptEtaAD3(bool adapt) { ad3_adapt_eta_ = adapt; }
+    void SetAutodetectAcyclic(bool a) { autodetect_acyclic_ = a; }
     void SetResidualThresholdAD3(double threshold)
     {
         ad3_residual_threshold_ = threshold;
@@ -432,8 +433,12 @@ class FactorGraph
                           double* value)
     {
         double upper_bound;
-        return RunAD3(
-          -1e100, posteriors, additional_posteriors, value, &upper_bound);
+        return RunAD3(-1e100,
+                      posteriors,
+                      additional_posteriors,
+                      value,
+                      &upper_bound,
+                      /*solve_qp=*/false);
     }
 
     int SolveQP(vector<double>* posteriors,
@@ -526,6 +531,13 @@ class FactorGraph
                           double* best_lower_bound,
                           double* best_upper_bound);
 
+    bool CheckAcyclic();
+
+    int SolveAcyclic(bool solve_qp,
+		     vector<double>* posteriors,
+		     vector<double>* additionals,
+		     double* value);
+
 
   private:
     vector<BinaryVariable*> variables_;
@@ -546,6 +558,7 @@ class FactorGraph
     bool ad3_adapt_eta_;
     // Threshold for primal/dual residuals.
     double ad3_residual_threshold_;
+    bool autodetect_acyclic_;
 
     // Parameters for PSDD:
     int psdd_max_iterations_; // Maximum number of iterations.
