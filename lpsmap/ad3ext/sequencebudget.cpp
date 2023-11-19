@@ -2300,7 +2300,7 @@ int __pyx_module_is_main_lpsmap__ad3ext__sequencebudget = 0;
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_TypeError;
 /* #### Code section: string_decls ### */
-static const char __pyx_k__7[] = "?";
+static const char __pyx_k__8[] = "?";
 static const char __pyx_k_gc[] = "gc";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
@@ -2320,6 +2320,7 @@ static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_initialize[] = "initialize";
 static const char __pyx_k_num_states[] = "num_states";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
+static const char __pyx_k_force_budget[] = "force_budget";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_stringsource[] = "<stringsource>";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
@@ -2336,7 +2337,7 @@ static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __red
 /* #### Code section: decls ### */
 static int __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget___cinit__(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, bool __pyx_v_allocate); /* proto */
 static void __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_2__dealloc__(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, std::vector<int>  __pyx_v_num_states, int __pyx_v_budget); /* proto */
+static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, std::vector<int>  __pyx_v_num_states, int __pyx_v_budget, bool __pyx_v_force_budget); /* proto */
 static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_6__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_8__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -2388,13 +2389,14 @@ typedef struct {
   PyObject *__pyx_n_s_PFactorSequenceBudget___setstate;
   PyObject *__pyx_n_s_PFactorSequenceBudget_initialize;
   PyObject *__pyx_n_s_TypeError;
-  PyObject *__pyx_n_s__7;
+  PyObject *__pyx_n_s__8;
   PyObject *__pyx_n_s_allocate;
   PyObject *__pyx_n_s_asyncio_coroutines;
   PyObject *__pyx_n_s_budget;
   PyObject *__pyx_n_s_cline_in_traceback;
   PyObject *__pyx_kp_u_disable;
   PyObject *__pyx_kp_u_enable;
+  PyObject *__pyx_n_s_force_budget;
   PyObject *__pyx_kp_u_gc;
   PyObject *__pyx_n_s_getstate;
   PyObject *__pyx_n_s_initialize;
@@ -2418,10 +2420,11 @@ typedef struct {
   PyObject *__pyx_n_s_test;
   PyObject *__pyx_tuple_;
   PyObject *__pyx_tuple__3;
-  PyObject *__pyx_tuple__5;
+  PyObject *__pyx_tuple__4;
+  PyObject *__pyx_tuple__6;
   PyObject *__pyx_codeobj__2;
-  PyObject *__pyx_codeobj__4;
-  PyObject *__pyx_codeobj__6;
+  PyObject *__pyx_codeobj__5;
+  PyObject *__pyx_codeobj__7;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -2475,13 +2478,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_PFactorSequenceBudget___setstate);
   Py_CLEAR(clear_module_state->__pyx_n_s_PFactorSequenceBudget_initialize);
   Py_CLEAR(clear_module_state->__pyx_n_s_TypeError);
-  Py_CLEAR(clear_module_state->__pyx_n_s__7);
+  Py_CLEAR(clear_module_state->__pyx_n_s__8);
   Py_CLEAR(clear_module_state->__pyx_n_s_allocate);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
   Py_CLEAR(clear_module_state->__pyx_n_s_budget);
   Py_CLEAR(clear_module_state->__pyx_n_s_cline_in_traceback);
   Py_CLEAR(clear_module_state->__pyx_kp_u_disable);
   Py_CLEAR(clear_module_state->__pyx_kp_u_enable);
+  Py_CLEAR(clear_module_state->__pyx_n_s_force_budget);
   Py_CLEAR(clear_module_state->__pyx_kp_u_gc);
   Py_CLEAR(clear_module_state->__pyx_n_s_getstate);
   Py_CLEAR(clear_module_state->__pyx_n_s_initialize);
@@ -2505,10 +2509,11 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_test);
   Py_CLEAR(clear_module_state->__pyx_tuple_);
   Py_CLEAR(clear_module_state->__pyx_tuple__3);
-  Py_CLEAR(clear_module_state->__pyx_tuple__5);
+  Py_CLEAR(clear_module_state->__pyx_tuple__4);
+  Py_CLEAR(clear_module_state->__pyx_tuple__6);
   Py_CLEAR(clear_module_state->__pyx_codeobj__2);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__4);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__6);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__5);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__7);
   return 0;
 }
 #endif
@@ -2540,13 +2545,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_PFactorSequenceBudget___setstate);
   Py_VISIT(traverse_module_state->__pyx_n_s_PFactorSequenceBudget_initialize);
   Py_VISIT(traverse_module_state->__pyx_n_s_TypeError);
-  Py_VISIT(traverse_module_state->__pyx_n_s__7);
+  Py_VISIT(traverse_module_state->__pyx_n_s__8);
   Py_VISIT(traverse_module_state->__pyx_n_s_allocate);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
   Py_VISIT(traverse_module_state->__pyx_n_s_budget);
   Py_VISIT(traverse_module_state->__pyx_n_s_cline_in_traceback);
   Py_VISIT(traverse_module_state->__pyx_kp_u_disable);
   Py_VISIT(traverse_module_state->__pyx_kp_u_enable);
+  Py_VISIT(traverse_module_state->__pyx_n_s_force_budget);
   Py_VISIT(traverse_module_state->__pyx_kp_u_gc);
   Py_VISIT(traverse_module_state->__pyx_n_s_getstate);
   Py_VISIT(traverse_module_state->__pyx_n_s_initialize);
@@ -2570,10 +2576,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_test);
   Py_VISIT(traverse_module_state->__pyx_tuple_);
   Py_VISIT(traverse_module_state->__pyx_tuple__3);
-  Py_VISIT(traverse_module_state->__pyx_tuple__5);
+  Py_VISIT(traverse_module_state->__pyx_tuple__4);
+  Py_VISIT(traverse_module_state->__pyx_tuple__6);
   Py_VISIT(traverse_module_state->__pyx_codeobj__2);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__4);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__6);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__5);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__7);
   return 0;
 }
 #endif
@@ -2623,13 +2630,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_PFactorSequenceBudget___setstate __pyx_mstate_global->__pyx_n_s_PFactorSequenceBudget___setstate
 #define __pyx_n_s_PFactorSequenceBudget_initialize __pyx_mstate_global->__pyx_n_s_PFactorSequenceBudget_initialize
 #define __pyx_n_s_TypeError __pyx_mstate_global->__pyx_n_s_TypeError
-#define __pyx_n_s__7 __pyx_mstate_global->__pyx_n_s__7
+#define __pyx_n_s__8 __pyx_mstate_global->__pyx_n_s__8
 #define __pyx_n_s_allocate __pyx_mstate_global->__pyx_n_s_allocate
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
 #define __pyx_n_s_budget __pyx_mstate_global->__pyx_n_s_budget
 #define __pyx_n_s_cline_in_traceback __pyx_mstate_global->__pyx_n_s_cline_in_traceback
 #define __pyx_kp_u_disable __pyx_mstate_global->__pyx_kp_u_disable
 #define __pyx_kp_u_enable __pyx_mstate_global->__pyx_kp_u_enable
+#define __pyx_n_s_force_budget __pyx_mstate_global->__pyx_n_s_force_budget
 #define __pyx_kp_u_gc __pyx_mstate_global->__pyx_kp_u_gc
 #define __pyx_n_s_getstate __pyx_mstate_global->__pyx_n_s_getstate
 #define __pyx_n_s_initialize __pyx_mstate_global->__pyx_n_s_initialize
@@ -2653,10 +2661,11 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_test __pyx_mstate_global->__pyx_n_s_test
 #define __pyx_tuple_ __pyx_mstate_global->__pyx_tuple_
 #define __pyx_tuple__3 __pyx_mstate_global->__pyx_tuple__3
-#define __pyx_tuple__5 __pyx_mstate_global->__pyx_tuple__5
+#define __pyx_tuple__4 __pyx_mstate_global->__pyx_tuple__4
+#define __pyx_tuple__6 __pyx_mstate_global->__pyx_tuple__6
 #define __pyx_codeobj__2 __pyx_mstate_global->__pyx_codeobj__2
-#define __pyx_codeobj__4 __pyx_mstate_global->__pyx_codeobj__4
-#define __pyx_codeobj__6 __pyx_mstate_global->__pyx_codeobj__6
+#define __pyx_codeobj__5 __pyx_mstate_global->__pyx_codeobj__5
+#define __pyx_codeobj__7 __pyx_mstate_global->__pyx_codeobj__7
 /* #### Code section: module_code ### */
 
 /* "vector.from_py":45
@@ -2985,7 +2994,7 @@ static void __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_2_
  *         if self.allocate:
  *             del self.thisptr             # <<<<<<<<<<<<<<
  * 
- *     def initialize(self, vector[int] num_states, int budget):
+ *     def initialize(self, vector[int] num_states, int budget,
  */
     delete __pyx_v_self->__pyx_base.__pyx_base.thisptr;
 
@@ -3012,8 +3021,9 @@ static void __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_2_
 /* "lpsmap/ad3ext/sequencebudget.pyx":20
  *             del self.thisptr
  * 
- *     def initialize(self, vector[int] num_states, int budget):             # <<<<<<<<<<<<<<
- *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)
+ *     def initialize(self, vector[int] num_states, int budget,             # <<<<<<<<<<<<<<
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
  */
 
 /* Python wrapper */
@@ -3034,11 +3044,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 ) {
   std::vector<int>  __pyx_v_num_states;
   int __pyx_v_budget;
+  bool __pyx_v_force_budget;
   #if !CYTHON_METH_FASTCALL
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   #endif
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[2] = {0,0};
+  PyObject* values[3] = {0,0,0};
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3054,10 +3065,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   #endif
   __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
   {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_num_states,&__pyx_n_s_budget,0};
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_num_states,&__pyx_n_s_budget,&__pyx_n_s_force_budget,0};
     if (__pyx_kwds) {
       Py_ssize_t kw_args;
       switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
         case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
         CYTHON_FALLTHROUGH;
         case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
@@ -3082,25 +3095,49 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
         }
         else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 20, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("initialize", 1, 2, 2, 1); __PYX_ERR(1, 20, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("initialize", 0, 2, 3, 1); __PYX_ERR(1, 20, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_force_budget);
+          if (value) { values[2] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 20, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "initialize") < 0)) __PYX_ERR(1, 20, __pyx_L3_error)
       }
-    } else if (unlikely(__pyx_nargs != 2)) {
-      goto __pyx_L5_argtuple_error;
     } else {
-      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
-      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
     }
     __pyx_v_num_states = __pyx_convert_vector_from_py_int(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(1, 20, __pyx_L3_error)
     __pyx_v_budget = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_budget == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 20, __pyx_L3_error)
+    if (values[2]) {
+      __pyx_v_force_budget = __Pyx_PyObject_IsTrue(values[2]); if (unlikely((__pyx_v_force_budget == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(1, 21, __pyx_L3_error)
+    } else {
+
+      /* "lpsmap/ad3ext/sequencebudget.pyx":21
+ * 
+ *     def initialize(self, vector[int] num_states, int budget,
+ *                    bool force_budget=False):             # <<<<<<<<<<<<<<
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
+ * 	                                                 force_budget)
+ */
+      __pyx_v_force_budget = ((bool)0);
+    }
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("initialize", 1, 2, 2, __pyx_nargs); __PYX_ERR(1, 20, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("initialize", 0, 2, 3, __pyx_nargs); __PYX_ERR(1, 20, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3114,7 +3151,15 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(((struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *)__pyx_v_self), __PYX_STD_MOVE_IF_SUPPORTED(__pyx_v_num_states), __pyx_v_budget);
+  __pyx_r = __pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(((struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *)__pyx_v_self), __PYX_STD_MOVE_IF_SUPPORTED(__pyx_v_num_states), __pyx_v_budget, __pyx_v_force_budget);
+
+  /* "lpsmap/ad3ext/sequencebudget.pyx":20
+ *             del self.thisptr
+ * 
+ *     def initialize(self, vector[int] num_states, int budget,             # <<<<<<<<<<<<<<
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
+ */
 
   /* function exit code */
   {
@@ -3127,23 +3172,25 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, std::vector<int>  __pyx_v_num_states, int __pyx_v_budget) {
+static PyObject *__pyx_pf_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_4initialize(struct __pyx_obj_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget *__pyx_v_self, std::vector<int>  __pyx_v_num_states, int __pyx_v_budget, bool __pyx_v_force_budget) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("initialize", 1);
 
-  /* "lpsmap/ad3ext/sequencebudget.pyx":21
- * 
- *     def initialize(self, vector[int] num_states, int budget):
- *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)             # <<<<<<<<<<<<<<
+  /* "lpsmap/ad3ext/sequencebudget.pyx":22
+ *     def initialize(self, vector[int] num_states, int budget,
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,             # <<<<<<<<<<<<<<
+ * 	                                                 force_budget)
  */
-  ((AD3::FactorSequenceBudget *)__pyx_v_self->__pyx_base.__pyx_base.thisptr)->Initialize(__pyx_v_num_states, __pyx_v_budget);
+  ((AD3::FactorSequenceBudget *)__pyx_v_self->__pyx_base.__pyx_base.thisptr)->Initialize(__pyx_v_num_states, __pyx_v_budget, __pyx_v_force_budget);
 
   /* "lpsmap/ad3ext/sequencebudget.pyx":20
  *             del self.thisptr
  * 
- *     def initialize(self, vector[int] num_states, int budget):             # <<<<<<<<<<<<<<
- *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)
+ *     def initialize(self, vector[int] num_states, int budget,             # <<<<<<<<<<<<<<
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
  */
 
   /* function exit code */
@@ -3525,13 +3572,14 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_PFactorSequenceBudget___setstate, __pyx_k_PFactorSequenceBudget___setstate, sizeof(__pyx_k_PFactorSequenceBudget___setstate), 0, 0, 1, 1},
     {&__pyx_n_s_PFactorSequenceBudget_initialize, __pyx_k_PFactorSequenceBudget_initialize, sizeof(__pyx_k_PFactorSequenceBudget_initialize), 0, 0, 1, 1},
     {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
-    {&__pyx_n_s__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 0, 1, 1},
+    {&__pyx_n_s__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 0, 1, 1},
     {&__pyx_n_s_allocate, __pyx_k_allocate, sizeof(__pyx_k_allocate), 0, 0, 1, 1},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
     {&__pyx_n_s_budget, __pyx_k_budget, sizeof(__pyx_k_budget), 0, 0, 1, 1},
     {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
     {&__pyx_kp_u_disable, __pyx_k_disable, sizeof(__pyx_k_disable), 0, 1, 0, 0},
     {&__pyx_kp_u_enable, __pyx_k_enable, sizeof(__pyx_k_enable), 0, 1, 0, 0},
+    {&__pyx_n_s_force_budget, __pyx_k_force_budget, sizeof(__pyx_k_force_budget), 0, 0, 1, 1},
     {&__pyx_kp_u_gc, __pyx_k_gc, sizeof(__pyx_k_gc), 0, 1, 0, 0},
     {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
     {&__pyx_n_s_initialize, __pyx_k_initialize, sizeof(__pyx_k_initialize), 0, 0, 1, 1},
@@ -3573,23 +3621,27 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "lpsmap/ad3ext/sequencebudget.pyx":20
  *             del self.thisptr
  * 
- *     def initialize(self, vector[int] num_states, int budget):             # <<<<<<<<<<<<<<
- *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)
+ *     def initialize(self, vector[int] num_states, int budget,             # <<<<<<<<<<<<<<
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
  */
-  __pyx_tuple_ = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_num_states, __pyx_n_s_budget); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 20, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_num_states, __pyx_n_s_budget, __pyx_n_s_force_budget); if (unlikely(!__pyx_tuple_)) __PYX_ERR(1, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_lpsmap_ad3ext_sequencebudget_pyx, __pyx_n_s_initialize, 20, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(1, 20, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_lpsmap_ad3ext_sequencebudget_pyx, __pyx_n_s_initialize, 20, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(1, 20, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, Py_False); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__3);
+  __Pyx_GIVEREF(__pyx_tuple__3);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_reduce_cython, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 1, __pyx_L1_error)
 
   /* "(tree fragment)":3
  * def __reduce_cython__(self):
@@ -3597,10 +3649,10 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  */
-  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 3, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_n_s_self, __pyx_n_s_pyx_state); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_setstate_cython, 3, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4031,11 +4083,13 @@ if (!__Pyx_RefNanny) {
   /* "lpsmap/ad3ext/sequencebudget.pyx":20
  *             del self.thisptr
  * 
- *     def initialize(self, vector[int] num_states, int budget):             # <<<<<<<<<<<<<<
- *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)
+ *     def initialize(self, vector[int] num_states, int budget,             # <<<<<<<<<<<<<<
+ *                    bool force_budget=False):
+ *         (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
  */
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_5initialize, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PFactorSequenceBudget_initialize, NULL, __pyx_n_s_lpsmap_ad3ext_sequencebudget, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_tuple__3);
   if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget, __pyx_n_s_initialize, __pyx_t_2) < 0) __PYX_ERR(1, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   PyType_Modified(__pyx_ptype_6lpsmap_6ad3ext_14sequencebudget_PFactorSequenceBudget);
@@ -4045,7 +4099,7 @@ if (!__Pyx_RefNanny) {
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  * def __setstate_cython__(self, __pyx_state):
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PFactorSequenceBudget___reduce_c, NULL, __pyx_n_s_lpsmap_ad3ext_sequencebudget, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PFactorSequenceBudget___reduce_c, NULL, __pyx_n_s_lpsmap_ad3ext_sequencebudget, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_reduce_cython, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4056,7 +4110,7 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     raise TypeError, "no default __reduce__ due to non-trivial __cinit__"
  */
-  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PFactorSequenceBudget___setstate, NULL, __pyx_n_s_lpsmap_ad3ext_sequencebudget, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_6lpsmap_6ad3ext_14sequencebudget_21PFactorSequenceBudget_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PFactorSequenceBudget___setstate, NULL, __pyx_n_s_lpsmap_ad3ext_sequencebudget, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_setstate_cython, __pyx_t_2) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7745,7 +7799,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__7);
+        name = __Pyx_NewRef(__pyx_n_s__8);
     }
     return name;
 }

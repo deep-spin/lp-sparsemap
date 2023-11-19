@@ -25,6 +25,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -191,8 +192,11 @@ class Factor
       const vector<double>& additional_log_potentials)
     {
         if (additional_log_potentials.size() != GetNumAdditionals()) {
-	    throw std::invalid_argument(
-	      "Invalid size of additional log potentials.");
+	    std::stringstream ss;
+	    ss << "Invalid size of additional log potentials: "
+	       << additional_log_potentials.size() << " vs "
+	       << GetNumAdditionals() << std::endl;
+	    throw std::invalid_argument(ss.str());
 	}
         additional_log_potentials_ = additional_log_potentials;
     }

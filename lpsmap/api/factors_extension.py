@@ -27,7 +27,7 @@ class Sequence(object):
 
 
 class SequenceBudget(object):
-    def __init__(self, variables, additionals, budget):
+    def __init__(self, variables, additionals, budget, force_budget=False):
         """
 
         Parameters
@@ -42,11 +42,13 @@ class SequenceBudget(object):
         self._variables = variables
         self._additionals = additionals
         self._budget = budget
+        self._force_budget = force_budget
 
     def _construct(self, fg, pvars):
         seq_length, n_states = self._variables.shape
         f = PFactorSequenceBudget()
-        f.initialize([n_states for _ in range(seq_length)], self._budget)
+        f.initialize([n_states for _ in range(seq_length)], self._budget,
+                     self._force_budget)
         fg.declare_factor(f, pvars, owned_by_graph=True)
 
         return [f], [self._additionals]

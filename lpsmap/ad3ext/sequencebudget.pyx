@@ -17,5 +17,7 @@ cdef class PFactorSequenceBudget(PGenericFactor):
         if self.allocate:
             del self.thisptr
 
-    def initialize(self, vector[int] num_states, int budget):
-        (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget)
+    def initialize(self, vector[int] num_states, int budget,
+                   bool force_budget=False):
+        (<FactorSequenceBudget*>self.thisptr).Initialize(num_states, budget,
+	                                                 force_budget)
