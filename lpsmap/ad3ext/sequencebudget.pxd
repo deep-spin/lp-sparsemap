@@ -9,6 +9,6 @@ cdef extern from "FactorSequenceBudget.h" namespace "AD3":
 
     cdef cppclass FactorSequenceBudget(GenericFactor):
         FactorSequenceBudget()
-        void Initialize(vector[int] num_states, int budget)
+        void Initialize(vector[int] num_states, int budget, bool force_budget)
 
 

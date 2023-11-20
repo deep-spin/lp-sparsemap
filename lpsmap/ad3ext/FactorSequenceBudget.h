@@ -95,8 +95,8 @@ class FactorSequenceBudget : public GenericFactor {
       path[0][l].resize(1);
       int bin = 0;
       values[0][l][bin] = 
-      GetNodeScore(
-        0, l, variable_log_potentials,additional_log_potentials) 
+        GetNodeScore(
+          0, l, variable_log_potentials, additional_log_potentials) 
         + 
         GetEdgeScore(
           0, 0, l, variable_log_potentials, additional_log_potentials);
@@ -143,22 +143,40 @@ class FactorSequenceBudget : public GenericFactor {
     double best_value = -std::numeric_limits<double>::infinity();
     int best = -1;
     int best_bin = -1;
-    int num_bins = (budget_ < length)? budget_+1 : length+1;
-    for (int b = 0; b < num_bins; ++b) {
+    if (forced_budget_) {
+      best_bin = budget_;
       for (int l = 0; l < num_states_[length - 1]; ++l) {
-	int bin = b;
+	int bin = best_bin;
 	if (l == 0) --bin;
 	if (bin < 0) continue;
 	if (bin >= path[length-1][l].size()) continue;
-        if (length > 1 && path[length-1][l][bin] < 0) continue;
-        double val = values[length-1][l][bin] +
-          GetEdgeScore(length, l, 0, variable_log_potentials,
-                       additional_log_potentials);
-        if (best < 0 || val > best_value) {
-          best_value = val;
-          best = l;
-          best_bin = b;
-        }
+	if (length > 1 && path[length-1][l][bin] < 0) continue;
+	double val = values[length-1][l][bin] +
+	  GetEdgeScore(length, l, 0, variable_log_potentials,
+		       additional_log_potentials);
+	if (best < 0 || val > best_value) {
+	  best_value = val;
+	  best = l;
+	}
+      }
+    } else {
+      int num_bins = (budget_ < length)? budget_+1 : length+1;
+      for (int b = 0; b < num_bins; ++b) {
+	for (int l = 0; l < num_states_[length - 1]; ++l) {
+	  int bin = b;
+	  if (l == 0) --bin;
+	  if (bin < 0) continue;
+	  if (bin >= path[length-1][l].size()) continue;
+	  if (length > 1 && path[length-1][l][bin] < 0) continue;
+	  double val = values[length-1][l][bin] +
+	    GetEdgeScore(length, l, 0, variable_log_potentials,
+			 additional_log_potentials);
+	  if (best < 0 || val > best_value) {
+	    best_value = val;
+	    best = l;
+	    best_bin = b;
+	  }
+	}
       }
     }
 
@@ -286,9 +304,14 @@ class FactorSequenceBudget : public GenericFactor {
   // in the sequence. The start and stop positions are not considered here.
   // Note: the variables and the the additional log-potentials must be ordered
   // properly.
-  void Initialize(const vector<int>& num_states, int budget) {
+  // Budget is the maximum number of times label 0 can occur (if
+  // force_budget = false) or the exact number of times label 0 can occur
+  // (if force_budget = true).
+  void Initialize(const vector<int>& num_states, int budget,
+		  bool force_budget = false) {
     int length = num_states.size();
     budget_ = budget;
+    forced_budget_ = force_budget;
     num_states_ = num_states;
     index_edges_.resize(length + 1);
     offset_states_.resize(length);
@@ -320,6 +343,8 @@ class FactorSequenceBudget : public GenericFactor {
  private:
   // Budget (maximum number of occurrences of state 0).
   int budget_;
+  // Forced budget (false means can be <=, true means must be =).
+  bool forced_budget_;
   // Number of states for each position.
   vector<int> num_states_;
   // Offset of states for each position.
