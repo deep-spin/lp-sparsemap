@@ -210,7 +210,7 @@ cdef class PFactorGraph:
                                                    owned_by_graph)
         return pf
 
-    def create_factor_budget(self, list p_variables, int budget,
+    def create_factor_budget(self, list p_variables, int budget, bool force_budget=False,
                              list negated=None, bool owned_by_graph=True):
         """Creates and binds a budget factor to the passed binary variables.
 
@@ -222,6 +222,9 @@ cdef class PFactorGraph:
 
         budget : int,
             Maximum number of variables that can be turned on.
+
+        force_budget : bool,
+            If true, must exhaust budget (i.e. force = budget instead of <= budget).
 
         negated : list of bool, optional
             List of boolean flags the same length as ``p_variables``, indicating
@@ -240,7 +243,7 @@ cdef class PFactorGraph:
 
         cdef PFactor pf = PFactor()
         pf.thisptr = self.thisptr.CreateFactorBUDGET(variables, negated_, budget,
-                                                     owned_by_graph)
+                                                     force_budget, owned_by_graph)
         return pf
 
     def create_factor_knapsack(self,

@@ -25,6 +25,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -190,7 +191,13 @@ class Factor
     void SetAdditionalLogPotentials(
       const vector<double>& additional_log_potentials)
     {
-        assert(additional_log_potentials.size() == GetNumAdditionals());
+        if (additional_log_potentials.size() != GetNumAdditionals()) {
+	    std::stringstream ss;
+	    ss << "Invalid size of additional log potentials: "
+	       << additional_log_potentials.size() << " vs "
+	       << GetNumAdditionals() << std::endl;
+	    throw std::invalid_argument(ss.str());
+	}
         additional_log_potentials_ = additional_log_potentials;
     }
 
@@ -574,6 +581,10 @@ class FactorBUDGET : public Factor
     size_t GetBudget() { return budget_; }
     void SetBudget(size_t budget) { budget_ = budget; }
 
+    // Get/set forced budget (false means can be <=, true means must be =).
+    bool ForcedBudget() { return forced_budget_; }
+    void ForceBudget(bool forced) { forced_budget_ = forced; }
+
     // Add evidence information to the factor.
     int AddEvidence(vector<bool>* active_links,
                     vector<int>* evidence,
@@ -602,6 +613,9 @@ class FactorBUDGET : public Factor
                      vector<double>& out_add);
 
   private:
+    // Forced budget (false means can be <=, true means must be =).
+    bool forced_budget_;
+  
     // Budget value.
     size_t budget_;
 

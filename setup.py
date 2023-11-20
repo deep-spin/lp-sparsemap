@@ -189,6 +189,8 @@ extensions = [
     Extension('lpsmap.ad3qp.base', ["lpsmap/ad3qp/base.pyx"]),
     Extension('lpsmap.ad3ext.sequence',
               ["lpsmap/ad3ext/sequence.pyx"]),
+    Extension('lpsmap.ad3ext.sequencebudget',
+              ["lpsmap/ad3ext/sequencebudget.pyx"]),
     Extension('lpsmap.ad3ext.tree',
               ["lpsmap/ad3ext/tree.pyx",
                "lpsmap/ad3ext/DependencyDecoder.cpp"]),

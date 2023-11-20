@@ -142,6 +142,7 @@ cdef extern from "ad3/FactorGraph.h" namespace "AD3":
         Factor *CreateFactorBUDGET(vector[BinaryVariable*] variables,
                                    vector[bool] negated,
                                    int budget,
+				   bool force_budget,
                                    bool owned_by_graph)
         Factor *CreateFactorKNAPSACK(vector[BinaryVariable*] variables,
                                      vector[bool] negated,

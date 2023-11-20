@@ -890,15 +890,16 @@ FactorGraph::CheckAcyclic()
     return acyclic;
 }
 
-/* standalone argmax function for acyclic factor graphs.
- * should avoid the cmplication of the RunAD3 function.
+/* standalone MAP / SparseMAP function for acyclic factor graphs.
+ * should avoid the complication of the RunAD3 function.
  * */
-double
-FactorGraph::MaximizeAcyclic(vector<double>* posteriors,
-                             vector<double>* additionals)
+int
+FactorGraph::SolveAcyclic(bool solve_qp,
+			  vector<double>* posteriors,
+			  vector<double>* additionals,
+			  double* value)
 {
-
-    double value = 0;
+    *value = 0.0;    
     posteriors->resize(variables_.size(), 0.0);
 
     vector<int> add_offsets(factors_.size());
@@ -907,7 +908,6 @@ FactorGraph::MaximizeAcyclic(vector<double>* posteriors,
         add_offsets[j] = offset;
         offset += factors_[j]->GetNumAdditionals();
     }
-
     additionals->resize(offset);
 
     // deal with zero-degree variables if any
@@ -915,12 +915,20 @@ FactorGraph::MaximizeAcyclic(vector<double>* posteriors,
         auto v = variables_[i];
         if (v->Degree() == 0) {
             auto eta_ui = v->GetLogPotential();
-            (*posteriors)[i] = (eta_ui > 0) ? 1.0 : 0.0;
-            value += (eta_ui > 0) ? eta_ui : 0;
+	    if (solve_qp) {
+                double u = max(0.0, min(eta_ui, 1.0));
+		(*posteriors)[i] = u;
+		*value += u * eta_ui - 0.5 * u * u;
+	    } else {
+	        (*posteriors)[i] = (eta_ui > 0) ? 1.0 : 0.0;
+		*value += (eta_ui > 0) ? eta_ui : 0;
+	    }
         }
     }
 
-    // run maximize for each factor
+    bool fractional = false;
+
+    // run QP for each factor
     for (size_t j = 0; j < factors_.size(); ++j) {
         Factor* f = factors_[j];
         size_t factor_degree = f->Degree();
@@ -932,25 +940,54 @@ FactorGraph::MaximizeAcyclic(vector<double>* posteriors,
             (*eta_uf)[i] = f->GetVariable(i)->GetLogPotential();
         }
 
-        double value_f;
-        f->SolveMAPCached(&value_f);
-        value += value_f;
+	if (solve_qp) {
+	    // Solve the QP.
+	    f->SolveQPCached();
+	} else {
+            // Solve MAP.
+	    double value_f;
+	    f->SolveMAPCached(&value_f);
+	    *value += value_f;
+	}
 
         const vector<double>& mu_uf = f->GetCachedVariablePosteriors();
-
         for (size_t i = 0; i < factor_degree; ++i) {
             auto k = f->GetVariable(i)->GetId();
-            (*posteriors)[k] = mu_uf[i];
+	    double logp = f->GetVariable(i)->GetLogPotential();
+	    if (solve_qp) {
+	        double u_i = mu_uf[i];
+		(*posteriors)[k] = u_i;
+		if (!NEARLY_BINARY((*posteriors)[i], 1e-12))
+		    fractional = true;
+	        *value += u_i * logp - .5 * u_i * u_i;
+	    } else {
+	        (*posteriors)[k] = mu_uf[i];
+	    }
         }
 
+	auto add_logp = f->GetAdditionalLogPotentials();
         const auto& mu_vf = f->GetCachedAdditionalPosteriors();
         offset = add_offsets[j];
         for (size_t i = 0; i < mu_vf.size(); ++i) {
-            (*additionals)[offset] = mu_vf[i];
+	    (*additionals)[offset] = mu_vf[i];
             ++offset;
+	    if (solve_qp) {
+	        *value += mu_vf[i] * add_logp[i];
+	    }
         }
     }
-    return value;
+
+    if (!fractional) {
+      if (verbosity_ > 1) {
+	std::cout << "Solution is integer." << std::endl;
+      }
+      return STATUS_OPTIMAL_INTEGER;
+    } else {
+      if (verbosity_ > 1) {
+	std::cout << "Solution is fractional." << std::endl;
+      }
+      return STATUS_OPTIMAL_FRACTIONAL;
+    }
 }
 
 int
@@ -985,13 +1022,12 @@ FactorGraph::RunAD3(double lower_bound,
     }
 
     // for acyclic graph, can avoid iterative algorithm.
-    if (!solve_qp && autodetect_acyclic_ && CheckAcyclic()) {
+    if (autodetect_acyclic_ && CheckAcyclic()) {
         if (verbosity_ > 1) {
             std::cout << "Factor graph is acyclic; using this. \n"
                       << std::endl;
         }
-        *value = MaximizeAcyclic(posteriors, additional_posteriors);
-        return STATUS_OPTIMAL_INTEGER;
+        return SolveAcyclic(solve_qp, posteriors, additional_posteriors, value);
     }
 
     // Stopping criterion parameters.

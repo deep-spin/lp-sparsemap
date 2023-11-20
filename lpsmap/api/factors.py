@@ -39,13 +39,15 @@ class AndOut(Logic):
 
 
 class Budget(object):
-    def __init__(self, variables, budget):
+    def __init__(self, variables, budget, force_budget=False):
         self._variables = variables
         self.budget = budget
+        self.force_budget = force_budget
 
     # TODO: deal with negated
     def _construct(self, fg, pvars):
-        return [fg.create_factor_budget(pvars, self.budget)], []
+        return [fg.create_factor_budget(pvars, self.budget,
+                                        self.force_budget)], []
 
 
 class Pair(object):
